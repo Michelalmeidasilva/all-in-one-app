@@ -15,6 +15,10 @@
  */
 
 package com.michel.galileu.navigation
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
@@ -25,6 +29,8 @@ import androidx.navigation.navDeepLink
 
 interface NavigationSettings {
     val route: String
+    val name: String
+    val icon: ImageVector?
 }
 
 /**
@@ -32,13 +38,26 @@ interface NavigationSettings {
  */
 object RecipesNavigation : NavigationSettings {
     override val route = "recipes"
+    override val name = "Recipes"
+    override val icon: ImageVector =  Icons.Rounded.Home;
 }
 
+/**
+ * Rally app navigation destinations
+ */
+object SettingsNavigation : NavigationSettings {
+    override val route = "settings"
+    override val icon: ImageVector =  Icons.Rounded.Settings;
+    override val name = "Settings"
+}
 
 object RecipeDetailsNavigation : NavigationSettings {
     // Added for simplicity, this icon will not in fact be used, as SingleAccount isn't
     // part of the RallyTabRow selection
-    override val route = "details/"
+    override val route = "details"
+    override val name = "Details"
+    override val icon: ImageVector? = null;
+
     const val typeArg = "recipe_type"
 
     val routeWithArgs = "$route/{$typeArg}"
@@ -49,3 +68,10 @@ object RecipeDetailsNavigation : NavigationSettings {
         navDeepLink { uriPattern = "rally://$route/{$typeArg}" }
     )
 }
+
+
+val routesItems = listOf(RecipesNavigation, SettingsNavigation)
+
+
+val bottomNavItems = listOf(RecipesNavigation, SettingsNavigation)
+

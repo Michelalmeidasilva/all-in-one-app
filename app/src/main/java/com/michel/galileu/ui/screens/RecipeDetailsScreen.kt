@@ -4,7 +4,10 @@ import com.michel.galileu.R;
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,15 +18,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.michel.galileu.data.RecipesData
+import com.michel.galileu.data.Data
+
 
 @Composable
 fun RecipeDetailsScreen(recypeType: String?){
-    val recipe = remember { RecipesData.getRecipe(recipeId = recypeType) }
+    val recipe = remember { Data.getRecipe(recipeId = recypeType) }
+    val scrollState = rememberScrollState()
 
     val context = LocalContext.current
 
-    Column(modifier = Modifier.padding(10.dp)) {
+    Column(modifier = Modifier.padding(10.dp).scrollable(state= scrollState, orientation = Orientation.Vertical)) {
         Column(modifier = Modifier.padding(all = 4.dp)) {
             Text(
                 text = recipe.title,

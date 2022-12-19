@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.michel.galileu.ui.screens.RecipeDetailsScreen
 import com.michel.galileu.ui.screens.RecipeScreen
+import com.michel.galileu.ui.screens.SettingsScreen
 
 /*
  * Copyright 2022 The Android Open Source Project
@@ -28,10 +29,12 @@ import com.michel.galileu.ui.screens.RecipeScreen
 @Composable
 fun GalileuNavHost (
     navController: NavHostController,
+    modifier: Modifier = Modifier
 ) {
     NavHost(
         navController = navController,
         startDestination = RecipesNavigation.route,
+        modifier = modifier
     ) {
         composable(route = RecipesNavigation.route) {
             RecipeScreen(
@@ -39,6 +42,10 @@ fun GalileuNavHost (
                     navController.navigateToDetailsScreen(typeArg)
                 }
             )
+        }
+
+        composable(route = SettingsNavigation.route){
+            SettingsScreen()
         }
 
         composable(
@@ -73,3 +80,7 @@ fun NavHostController.navigateSingleTopTo(route: String) =
 private fun NavHostController.navigateToDetailsScreen(accountType: String) {
     this.navigateSingleTopTo("${RecipeDetailsNavigation.route}/$accountType")
 }
+
+
+
+// Screens to be displayed in the top RallyTabRow

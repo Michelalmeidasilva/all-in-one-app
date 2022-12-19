@@ -9,13 +9,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.michel.galileu.data.RecipesData
+import com.michel.galileu.data.Data
 import com.michel.galileu.models.recipe.RecipeModel
 
 
 @Composable
 fun RecipeScreen( onRecipeDetailsClick: (String) -> Unit = {}) {
-    val recipesData = RecipesData.recipes;
+    val recipesData = Data.recipes;
 
     LazyColumn(modifier= Modifier.padding(all = 4.dp)) {
         recipesData.mapIndexed { index, it -> item { RecipeCard(recipeData = it, index = index, onClick = onRecipeDetailsClick)}    }
