@@ -28,12 +28,10 @@ import com.michel.galileu.ui.screens.RecipeScreen
 @Composable
 fun GalileuNavHost (
     navController: NavHostController,
-    modifier: Modifier = Modifier
 ) {
     NavHost(
         navController = navController,
         startDestination = RecipesNavigation.route,
-        modifier = modifier
     ) {
         composable(route = RecipesNavigation.route) {
             RecipeScreen(
@@ -48,9 +46,9 @@ fun GalileuNavHost (
             arguments = RecipeDetailsNavigation.arguments,
             deepLinks = RecipeDetailsNavigation.deepLinks
         ) { navBackStackEntry ->
-            val accountType =
+            val recypeType =
                 navBackStackEntry.arguments?.getString(RecipeDetailsNavigation.typeArg)
-            RecipeDetailsScreen(accountType)
+            RecipeDetailsScreen(recypeType)
         }
     }
 }

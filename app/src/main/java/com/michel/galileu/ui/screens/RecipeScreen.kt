@@ -3,39 +3,35 @@ package com.michel.galileu.ui.screens
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import com.michel.galileu.data.RecipesData
 import com.michel.galileu.models.recipe.RecipeModel
 
 
 @Composable
-fun RecipeScreen(navController: NavController, onRecipeDetailsClick: (String) -> Unit = {}) {
-    val recipeData:  Array<RecipeModel> =  arrayOf(RecipeModel(steps = arrayOf("Cozinhar o feijão "), subtitle = "Top", title ="Strogonoff", ingredients = arrayOf("Arroz", "Feijão", "Carne") ))
+fun RecipeScreen( onRecipeDetailsClick: (String) -> Unit = {}) {
+    val recipesData = RecipesData.recipes;
 
 
     LazyColumn {
-        recipeData.map { item { RecipeCard(it, onClick = { navController.navigate("recipe-details/${it}", null, null)}) } }
+        recipesData.map { item {  RecipeCard(recipeData = it, onClick = onRecipeDetailsClick) } }
     }
 
 
 }
 
 
-
-
 @Composable
-fun RecipeCard(recipeData: RecipeModel, onClick: () -> Unit ) {
-    Row(modifier = Modifier.clickable {  onClick()}) {
-        Surface(shape= MaterialTheme.shapes.medium, tonalElevation = 1.dp, modifier = Modifier.padding(all = 8.dp)) {
+fun RecipeCard(recipeData: RecipeModel, onClick: (String) -> Unit ) {
+    ElevatedCard(modifier = Modifier.padding(4.dp).width(400.dp).clickable {  onClick(recipeData.id)}) {
 
+        Row(modifier = Modifier.padding(all = 30.dp)){
             Text("$1", style = MaterialTheme.typography.titleLarge)
-
-            Spacer(modifier = Modifier.width(8.dp))
 
             Column(                   modifier = Modifier.padding(all = 4.dp)) {
                 Text(
@@ -47,6 +43,9 @@ fun RecipeCard(recipeData: RecipeModel, onClick: () -> Unit ) {
                 Text(text = recipeData.subtitle)
             }
         }
+
+
+
     }
 }
 
