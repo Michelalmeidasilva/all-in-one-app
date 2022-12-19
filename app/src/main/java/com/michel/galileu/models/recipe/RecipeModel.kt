@@ -1,3 +1,3 @@
 package com.michel.galileu.models.recipe
 
-data class RecipeModel(val id: String, val instructions: List<String>, val subtitle: String, val title: String, val ingredients: List<String>)
+data class RecipeModel(val id: String, val instructions: List<String>, val subtitle: String, val title: String, val ingredients: List<String>, val imagePath: String? = null)

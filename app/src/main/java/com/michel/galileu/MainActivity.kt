@@ -13,16 +13,16 @@ import com.michel.galileu.ui.theme.GalileuTheme
 
 class MainActivity : ComponentActivity() {
 
+
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContent {
 
             GalileuTheme {
                 val navController = rememberNavController()
-
-                GalileuNavHost(navController)
-
+                GalileuNavHost(navController, )
             }
         }
     }
