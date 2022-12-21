@@ -19,7 +19,7 @@ import com.michel.galileu.navigation.GalileuNavHost
 import com.michel.galileu.navigation.RecipesNavigation
 import com.michel.galileu.navigation.bottomNavItems
 import com.michel.galileu.ui.theme.GalileuTheme
-
+import com.michel.galileu.ui.viewmodel.RecipeViewModel
 
 
 class MainActivity : ComponentActivity() {
@@ -40,17 +40,26 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
-fun GalileuApp(){
+fun GalileuApp(
+){
     GalileuTheme {
         val navController = rememberNavController()
         val currentBackStack by navController.currentBackStackEntryAsState()
         val currentDestination = currentBackStack?.destination;
+
         val currentScreen = bottomNavItems.find { it.route == currentDestination?.route } ?: RecipesNavigation
 
 
-        Scaffold( topBar = {GalileuTopBar(currentScreen = currentScreen.name)}, bottomBar = { GalileuNavBar(currentScreen= currentDestination?.route, onClickNavBar = {
-            navController.navigate(it)
-        }) }) { contentPadding ->
+        Scaffold(
+            topBar = {
+//                        if(currentScreen.route == RecipesNavigation.route){
+//                            GalileuTopBar(currentScreen = currentScreen.name, onSearchValue = {})
+//                        }
+                     },
+            bottomBar = {
+                        GalileuNavBar( currentScreen= currentDestination?.route, onClickNavBar = { navController.navigate(it) })
+                    })
+        { contentPadding ->
             GalileuNavHost(navController, modifier = Modifier.padding(contentPadding))
         }
 
