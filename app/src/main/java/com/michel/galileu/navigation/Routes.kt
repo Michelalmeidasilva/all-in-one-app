@@ -42,14 +42,20 @@ object RecipesNavigation : NavigationSettings {
     override val icon: ImageVector =  Icons.Rounded.Home;
 }
 
-/**
- * Rally app navigation destinations
- */
+
 object SettingsNavigation : NavigationSettings {
     override val route = "settings"
     override val icon: ImageVector =  Icons.Rounded.Settings;
     override val name = "Settings"
 }
+
+
+object RecipeAddNavigation : NavigationSettings {
+    override val route = "recipe-add"
+    override val icon: ImageVector =  Icons.Rounded.Settings;
+    override val name = "Recipe"
+}
+
 
 object RecipeDetailsNavigation : NavigationSettings {
     // Added for simplicity, this icon will not in fact be used, as SingleAccount isn't

@@ -6,6 +6,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.michel.galileu.ui.screens.RecipeAddScreen
 import com.michel.galileu.ui.screens.RecipeDetailsScreen
 import com.michel.galileu.ui.screens.RecipeScreen
 import com.michel.galileu.ui.screens.SettingsScreen
@@ -40,6 +41,9 @@ fun GalileuNavHost (
             RecipeScreen(
                 onRecipeDetailsClick = { typeArg ->
                     navController.navigateToDetailsScreen(typeArg)
+                },
+                onAddRecipeClick = {
+                    navController.navigate(RecipeAddNavigation.route)
                 }
             )
         }
@@ -53,9 +57,12 @@ fun GalileuNavHost (
             arguments = RecipeDetailsNavigation.arguments,
             deepLinks = RecipeDetailsNavigation.deepLinks
         ) { navBackStackEntry ->
-            val recypeType =
-                navBackStackEntry.arguments?.getString(RecipeDetailsNavigation.typeArg)
+            val recypeType = navBackStackEntry.arguments?.getString(RecipeDetailsNavigation.typeArg)
             RecipeDetailsScreen(recypeType)
+        }
+
+        composable (route = RecipeAddNavigation.route){
+            RecipeAddScreen()
         }
     }
 }
