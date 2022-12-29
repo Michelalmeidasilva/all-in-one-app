@@ -1,5 +1,6 @@
 package com.michel.galileu.navigation
 
+import android.app.Application
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -28,15 +29,17 @@ import com.michel.galileu.ui.screens.SettingsScreen
  */
 
 @Composable
-fun GalileuNavHost (
+fun GalileuNavHost(
     navController: NavHostController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    application: Application
 ) {
     NavHost(
         navController = navController,
         startDestination = RecipesNavigation.route,
         modifier = modifier
     ) {
+
         composable(route = RecipesNavigation.route) {
             RecipeScreen(
                 onRecipeDetailsClick = { typeArg ->
@@ -44,11 +47,12 @@ fun GalileuNavHost (
                 },
                 onAddRecipeClick = {
                     navController.navigate(RecipeAddNavigation.route)
-                }
+                },
+                application = application
             )
         }
 
-        composable(route = SettingsNavigation.route){
+        composable(route = SettingsNavigation.route) {
             SettingsScreen()
         }
 
@@ -57,12 +61,13 @@ fun GalileuNavHost (
             arguments = RecipeDetailsNavigation.arguments,
             deepLinks = RecipeDetailsNavigation.deepLinks
         ) { navBackStackEntry ->
-            val recypeType = navBackStackEntry.arguments?.getString(RecipeDetailsNavigation.typeArg)
+            val recypeType =
+                Integer.parseInt(navBackStackEntry.arguments?.getString(RecipeDetailsNavigation.typeArg))
             RecipeDetailsScreen(recypeType)
         }
 
-        composable (route = RecipeAddNavigation.route){
-            RecipeAddScreen()
+        composable(route = RecipeAddNavigation.route) {
+            RecipeAddScreen(application)
         }
     }
 }
@@ -84,10 +89,9 @@ fun NavHostController.navigateSingleTopTo(route: String) =
         restoreState = true
     }
 
-private fun NavHostController.navigateToDetailsScreen(accountType: String) {
+private fun NavHostController.navigateToDetailsScreen(accountType: Any) {
     this.navigateSingleTopTo("${RecipeDetailsNavigation.route}/$accountType")
 }
-
 
 
 // Screens to be displayed in the top RallyTabRow

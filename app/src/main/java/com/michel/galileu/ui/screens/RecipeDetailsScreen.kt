@@ -26,10 +26,10 @@ import com.michel.galileu.ui.viewmodel.RecipeViewModel
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun RecipeDetailsScreen(
-    idString: String?,
+    idString: Int?,
     modifier: Modifier = Modifier,
     viewModel: RecipeViewModel = viewModel(),
-    ){
+) {
     println(idString);
 
     viewModel.fetchRecipe(idString)
@@ -39,23 +39,16 @@ fun RecipeDetailsScreen(
 
     val scrollState = rememberScrollState()
 
-    Box(modifier = modifier.fillMaxSize()){
+    Box(modifier = modifier.fillMaxSize()) {
         Column(modifier = Modifier.verticalScroll(scrollState)) {
-            Column(modifier = Modifier.padding(all = 8.dp)) {
-                Text(
-                    text = recipeState.title,
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.primary
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(text = recipeState.subtitle)
-            }
-
-
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(0.3f)
-                .background(color = Color.Gray), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.3f)
+                    .background(color = Color.Gray),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Image(
                     painter = painterResource(id = R.drawable.meal),
                     contentDescription = null,
@@ -65,16 +58,41 @@ fun RecipeDetailsScreen(
                 )
             }
 
+            Column(modifier = Modifier.padding(all = 8.dp)) {
+                recipeState.title?.let {
+                    Text(
+                        text = it,
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+                Spacer(modifier = Modifier.height(4.dp))
+                recipeState?.subtitle?.let { Text(text = it) }
+            }
+
+
+
+
             Spacer(modifier = Modifier.height(4.dp))
 
             Column(modifier = Modifier.padding(all = 8.dp)) {
-                Text("Ingredientes:", style= MaterialTheme.typography.titleLarge)
-                recipeState.instructions.mapIndexed { index, it ->  Text(modifier = Modifier.padding(all= 4.dp), text="$index.  $it")}
+                Text("Ingredientes:", style = MaterialTheme.typography.titleLarge)
+                recipeState.instructions?.mapIndexed { index, it ->
+                    Text(
+                        modifier = Modifier.padding(
+                            all = 4.dp
+                        ), text = "$index.  $it"
+                    )
+                }
 
 
-                Text("Preparo:", modifier = Modifier.padding(all= 4.dp), style= MaterialTheme.typography.titleLarge)
-                recipeState.ingredients.map {
-                    Text(text=it)
+                Text(
+                    "Preparo:",
+                    modifier = Modifier.padding(all = 4.dp),
+                    style = MaterialTheme.typography.titleLarge
+                )
+                recipeState.ingredients?.map {
+                    Text(text = it)
                 }
             }
         }
