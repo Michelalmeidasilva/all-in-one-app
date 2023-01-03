@@ -11,8 +11,8 @@ interface RecipeDao {
     @Query("SELECT * FROM recipeentity")
     fun getAll(): List<RecipeEntity>
 
-    @Query("SELECT * FROM recipeentity WHERE id = :recipeId ")
-    fun getById(recipeId: Int): RecipeEntity
+    @Query("SELECT * FROM recipeentity WHERE id = :id")
+    fun getById(id: Int): RecipeEntity
 
     @Insert
     fun insert(recipe: RecipeEntity)

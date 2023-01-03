@@ -30,7 +30,6 @@ private lateinit var INSTANCE: DatabaseApp
 
 
 fun getDatabase(context: Context): DatabaseApp {
-    Log.i("Entrei", "Entrei aqui")
     synchronized(DatabaseApp::class.java) {
         if (!::INSTANCE.isInitialized) {
             INSTANCE = Room.databaseBuilder(

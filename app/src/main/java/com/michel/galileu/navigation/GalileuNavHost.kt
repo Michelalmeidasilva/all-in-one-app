@@ -63,11 +63,13 @@ fun GalileuNavHost(
         ) { navBackStackEntry ->
             val recypeType =
                 Integer.parseInt(navBackStackEntry.arguments?.getString(RecipeDetailsNavigation.typeArg))
-            RecipeDetailsScreen(recypeType)
+            RecipeDetailsScreen(recypeType, modifier, application)
         }
 
         composable(route = RecipeAddNavigation.route) {
-            RecipeAddScreen(application)
+            RecipeAddScreen(
+                application,
+                onSucessfullyCreateRecipe = { navController.navigateToRecipeScreen() })
         }
     }
 }
@@ -91,6 +93,10 @@ fun NavHostController.navigateSingleTopTo(route: String) =
 
 private fun NavHostController.navigateToDetailsScreen(accountType: Any) {
     this.navigateSingleTopTo("${RecipeDetailsNavigation.route}/$accountType")
+}
+
+private fun NavHostController.navigateToRecipeScreen() {
+    this.navigateSingleTopTo("${RecipesNavigation.route}")
 }
 
 

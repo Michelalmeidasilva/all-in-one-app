@@ -24,15 +24,12 @@ fun RecipeScreen(
     application: Application,
 ) {
     val repository = RecipeRepository(application);
-
-    var recipesData = remember { mutableStateListOf<RecipeEntity>() }
-
+    val recipesData = remember { mutableStateListOf<RecipeEntity>() }
 
     fun getData() {
         GlobalScope.launch {
 
             val recipes = repository.getRecipes();
-
             recipesData.addAll(recipes)
 
             println(recipesData?.size)
@@ -44,12 +41,9 @@ fun RecipeScreen(
         getData()
     }
 
-
-
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(modifier = Modifier.padding(all = 4.dp)) {
             recipesData.mapIndexed { index, it ->
-                println(it.toString());
                 item {
                     RecipeCard(
                         recipeData = it,

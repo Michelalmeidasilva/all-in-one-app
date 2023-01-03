@@ -3,7 +3,6 @@ package com.michel.galileu.data.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.UUID
 
 @Entity
 data class RecipeEntity(
@@ -12,7 +11,5 @@ data class RecipeEntity(
     @ColumnInfo(name = "subtitle") val subtitle: String? = null,
     @ColumnInfo(name = "instructions") val instructions: List<String>? = null,
     @ColumnInfo(name = "ingredients") val ingredients: List<String>? = null,
-    @ColumnInfo(name = "imagePath") val imagePath: String? = null
-) {
-
-}
+    @ColumnInfo(name = "imagePath") val imagePath: String = ""
+)

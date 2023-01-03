@@ -1,7 +1,7 @@
 package com.michel.galileu.ui.screens
 
 import android.annotation.SuppressLint
-import com.michel.galileu.R;
+import android.app.Application
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -11,46 +11,64 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 import com.michel.galileu.ui.viewmodel.RecipeViewModel
+import com.michel.galileu.utils.IOManager
 
 
-@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
-fun RecipeDetailsScreen(
-    idString: Int?,
-    modifier: Modifier = Modifier,
-    viewModel: RecipeViewModel = viewModel(),
-) {
-    println(idString);
+fun IngredientsList(ingredients: List<String>?) {
+    if (ingredients?.isEmpty() == false) {
+        Text(
+            "Preparo:",
+            modifier = Modifier.padding(all = 4.dp),
+            style = MaterialTheme.typography.titleLarge
+        )
+        ingredients.mapIndexed { index, it ->
+            Text(text = "${index + 1}.  $it")
+        }
+    }
+}
 
-    viewModel.fetchRecipe(idString)
-    val recipeState by viewModel.uiState.collectAsState()
 
-    println(recipeState.toString());
+@Composable
+fun InstructionsList(instructions: List<String>?) {
+    if (instructions?.isEmpty() == false) {
+        Text("Ingredientes:", style = MaterialTheme.typography.titleLarge)
 
-    val scrollState = rememberScrollState()
+        instructions.mapIndexed { index, it ->
+            Text(
+                modifier = Modifier.padding(
+                    all = 4.dp
+                ), text = "${index + 1}.  $it"
+            )
+        }
+    }
+}
 
-    Box(modifier = modifier.fillMaxSize()) {
-        Column(modifier = Modifier.verticalScroll(scrollState)) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.3f)
-                    .background(color = Color.Gray),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+@Composable
+fun AboutRecipe(title: String?, subtitle: String?, imageUrl: String?, application: Application) {
+    val manager = IOManager();
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(0.3f)
+            .background(color = Color.Gray),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        imageUrl?.let {
+            manager.getImage(application, imageUrl)?.let {
                 Image(
-                    painter = painterResource(id = R.drawable.meal),
+                    bitmap = it,
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxHeight()
@@ -58,42 +76,58 @@ fun RecipeDetailsScreen(
                 )
             }
 
-            Column(modifier = Modifier.padding(all = 8.dp)) {
-                recipeState.title?.let {
-                    Text(
-                        text = it,
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
-                Spacer(modifier = Modifier.height(4.dp))
-                recipeState?.subtitle?.let { Text(text = it) }
-            }
+        }
+
+    }
+
+    Column(modifier = Modifier.padding(all = 8.dp)) {
+        title?.let {
+            Text(
+                text = it,
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
+
+        Spacer(modifier = Modifier.height(4.dp))
+
+        subtitle?.let { Text(text = it) }
+    }
+}
 
 
+@SuppressLint("StateFlowValueCalledInComposition")
+@Composable
+fun RecipeDetailsScreen(
+    idString: Int,
+    modifier: Modifier = Modifier,
+    application: Application,
+    viewModel: RecipeViewModel = viewModel()
 
+) {
+    LaunchedEffect(Unit) {
+        viewModel.fetchRecipe(idString)
+    }
+
+    val recipeState by viewModel.uiState.collectAsState()
+    val scrollState = rememberScrollState()
+
+    println(recipeState)
+    Box(modifier = modifier.fillMaxSize()) {
+        Column(modifier = Modifier.verticalScroll(scrollState)) {
+
+            AboutRecipe(
+                title = recipeState.title,
+                subtitle = recipeState.subtitle,
+                imageUrl = recipeState.imagePath,
+                application
+            )
 
             Spacer(modifier = Modifier.height(4.dp))
 
             Column(modifier = Modifier.padding(all = 8.dp)) {
-                Text("Ingredientes:", style = MaterialTheme.typography.titleLarge)
-                recipeState.instructions?.mapIndexed { index, it ->
-                    Text(
-                        modifier = Modifier.padding(
-                            all = 4.dp
-                        ), text = "$index.  $it"
-                    )
-                }
-
-
-                Text(
-                    "Preparo:",
-                    modifier = Modifier.padding(all = 4.dp),
-                    style = MaterialTheme.typography.titleLarge
-                )
-                recipeState.ingredients?.map {
-                    Text(text = it)
-                }
+                InstructionsList(instructions = recipeState.instructions)
+                IngredientsList(ingredients = recipeState.ingredients)
             }
         }
     }
