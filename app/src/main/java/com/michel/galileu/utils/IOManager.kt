@@ -42,7 +42,7 @@ class IOManager() {
 
             val mypath = File(directory, fileName)
 
-Ï            var fos: FileOutputStream? = null
+            var fos: FileOutputStream? = null
 
             try {
                 fos = FileOutputStream(mypath)
