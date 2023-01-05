@@ -15,7 +15,6 @@ class RecipeAddViewModel(application: Application) : AndroidViewModel(applicatio
 
     @OptIn(DelicateCoroutinesApi::class)
     fun addRecipe(recipeEntity: RecipeEntity?, onComplete: () -> Unit) {
-        println(recipeEntity.toString())
         GlobalScope.launch {
             viewModelScope.launch {
                 if (recipeEntity !== null) {

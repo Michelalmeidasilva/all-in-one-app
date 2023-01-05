@@ -110,7 +110,6 @@ fun RegisterItems(listItem: SnapshotStateList<String>) {
 
 
                 ) {
-                    println(it.nativeKeyEvent.keyCode)
                     if (
                         it.nativeKeyEvent.keyCode == KEYCODE_ENTER
                     ) {

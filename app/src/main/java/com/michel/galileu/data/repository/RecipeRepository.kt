@@ -16,7 +16,6 @@ class RecipeRepository(
 
     suspend fun insertRecipe(recipe: RecipeEntity) {
         withContext(Dispatchers.IO) {
-            println("TO insert $recipe")
             databaseApp.recipeDao().insert(recipe)
         }
     }

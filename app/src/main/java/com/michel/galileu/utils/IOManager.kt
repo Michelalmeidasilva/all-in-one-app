@@ -19,20 +19,12 @@ class IOManager() {
 
 
     fun getImage(application: Application, imageName: String?): ImageBitmap? {
-
-        println("ImageName: $imageName");
-
         if (!imageName.isNullOrBlank()) {
             val cw = ContextWrapper(application)
             val directory = cw.getDir(".ImagesInternal", Context.MODE_PRIVATE)
 
-            println(directory.absolutePath)
-            println("GetImage");
-            println(directory.absolutePath + "/" + imageName)
-
             val image = BitmapFactory.decodeFile(directory.absolutePath + "/" + imageName)
 
-            println(image.config.name)
             return image.asImageBitmap()
         }
         return null;
@@ -50,8 +42,7 @@ class IOManager() {
 
             val mypath = File(directory, fileName)
 
-            println("UploadImage" + mypath)
-            var fos: FileOutputStream? = null
+Ï            var fos: FileOutputStream? = null
 
             try {
                 fos = FileOutputStream(mypath)

@@ -14,10 +14,12 @@ import androidx.compose.ui.unit.dp
 import com.michel.galileu.data.entities.RecipeEntity
 import com.michel.galileu.data.repository.RecipeRepository
 import com.michel.galileu.data.room.getDatabase
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 
+@OptIn(DelicateCoroutinesApi::class)
 @Composable
 fun RecipeScreen(
     onAddRecipeClick: () -> Unit, onRecipeDetailsClick: (Int) -> Unit = {},
@@ -28,11 +30,8 @@ fun RecipeScreen(
 
     fun getData() {
         GlobalScope.launch {
-
             val recipes = repository.getRecipes();
             recipesData.addAll(recipes)
-
-            println(recipesData?.size)
         }
 
     }

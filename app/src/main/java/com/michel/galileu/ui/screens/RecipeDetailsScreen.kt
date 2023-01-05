@@ -113,8 +113,6 @@ fun RecipeDetailsScreen(
     val recipeState by viewModel.uiState.collectAsState()
     val scrollState = rememberScrollState()
 
-    println(recipeState)
-
     Box(modifier = modifier.fillMaxSize()) {
         Column(modifier = Modifier.verticalScroll(scrollState)) {
 
