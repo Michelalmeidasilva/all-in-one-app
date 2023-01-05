@@ -65,7 +65,7 @@ fun AboutRecipe(title: String?, subtitle: String?, imageUrl: String?, applicatio
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        imageUrl?.let {
+        if (imageUrl !== null && imageUrl.isNotEmpty()) {
             manager.getImage(application, imageUrl)?.let {
                 Image(
                     bitmap = it,
@@ -75,8 +75,8 @@ fun AboutRecipe(title: String?, subtitle: String?, imageUrl: String?, applicatio
                         .fillMaxWidth()
                 )
             }
-
         }
+
 
     }
 
@@ -109,10 +109,12 @@ fun RecipeDetailsScreen(
         viewModel.fetchRecipe(idString)
     }
 
+
     val recipeState by viewModel.uiState.collectAsState()
     val scrollState = rememberScrollState()
 
     println(recipeState)
+
     Box(modifier = modifier.fillMaxSize()) {
         Column(modifier = Modifier.verticalScroll(scrollState)) {
 

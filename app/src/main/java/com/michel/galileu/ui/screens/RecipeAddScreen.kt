@@ -1,27 +1,32 @@
 package com.michel.galileu.ui.screens
 
+import CustomOutlinedTextField
 import android.app.Application
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.view.KeyEvent.KEYCODE_ENTER
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -29,7 +34,6 @@ import com.michel.galileu.data.entities.RecipeEntity
 import com.michel.galileu.ui.viewmodel.RecipeAddViewModel
 import com.michel.galileu.utils.IOManager
 import kotlinx.coroutines.*
-import okhttp3.internal.wait
 
 @Composable
 fun RequestContentPermission(application: Application, bitmap: MutableState<Bitmap?>) {
@@ -45,7 +49,16 @@ fun RequestContentPermission(application: Application, bitmap: MutableState<Bitm
         imageUri = uri
     }
 
-    Column(modifier = Modifier.padding(all = 8.dp)) {
+    Row(modifier = Modifier.padding(top = 10.dp, bottom = 10.dp)) {
+        Button(modifier = Modifier.align(Alignment.CenterVertically), onClick = {
+            launcher.launch("image/*")
+        }) {
+            Row {
+                Text(text = "Selecione a imagem.")
+            }
+
+        }
+
         imageUri?.let {
             if (Build.VERSION.SDK_INT < 28) {
                 bitmap.value = MediaStore.Images.Media.getBitmap(context.contentResolver, it)
@@ -58,23 +71,117 @@ fun RequestContentPermission(application: Application, bitmap: MutableState<Bitm
 
 
             bitmap.value?.let { btm ->
-                if (btm.width > btm.height) {
-                    Text(text = "Imagem adicionada.")
-                } else {
-                    Text(text = "Dimensões não suportadas")
+                Row(
+                    modifier = Modifier
+                        .padding(start = 4.dp)
+                        .align(Alignment.CenterVertically)
+                ) {
+                    Icon(
+                        modifier = Modifier.align(Alignment.CenterVertically),
+                        imageVector = Icons.Default.CheckCircle,
+                        contentDescription = "check circle"
+                    )
+
+                    Text(
+                        modifier = Modifier.align(Alignment.CenterVertically),
+                        text = "Imagem adicionada."
+                    )
                 }
-            }
-        }
 
-        Button(onClick = {
-            launcher.launch("image/*")
-        }) {
-            Row {
-                Text(text = "Selecione a imagem.")
-            }
 
+            }
         }
     }
+}
+
+
+@Composable
+fun RegisterItems(listItem: SnapshotStateList<String>) {
+    var item by rememberSaveable { mutableStateOf("") }
+
+    Row(modifier = Modifier.padding(bottom = 8.dp)) {
+        CustomOutlinedTextField(
+            modifier = Modifier
+                .align(Alignment.CenterVertically)
+                .fillMaxWidth(0.75f)
+                .height(50.dp)
+                .background(Color.White, RoundedCornerShape(5.dp))
+                .onKeyEvent(
+
+
+                ) {
+                    println(it.nativeKeyEvent.keyCode)
+                    if (
+                        it.nativeKeyEvent.keyCode == KEYCODE_ENTER
+                    ) {
+                        if (item.isNotEmpty()) {
+                            listItem.add(item)
+                        }
+                        true
+                    }
+                    true
+                },
+            value = item,
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardAction = KeyboardActions(
+                onDone = {
+                    if (item.isNotEmpty()) {
+                        listItem.add(item)
+                    }
+                }
+
+            ),
+            onValueChange = { item = it }
+        )
+
+
+
+        OutlinedButton(modifier = Modifier
+            .padding(horizontal = 10.dp)
+            .background(MaterialTheme.colorScheme.primary)
+            .height(50.dp),
+            border = BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary),
+            shape = RoundedCornerShape(80),
+            onClick = {
+                if (item.isNotEmpty()) {
+                    listItem.add(item)
+
+                }
+            }) {
+            Icon(
+                modifier = Modifier.size(18.dp),
+                imageVector = Icons.Filled.Add,
+                tint = Color.White,
+                contentDescription = "Add"
+            )
+        }
+    }
+
+
+    listItem.mapIndexed { index, it ->
+        Box(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(12.dp))
+                .padding(top = 2.dp)
+                .defaultMinSize(22.dp)
+                .fillMaxWidth(0.75f),
+            contentAlignment = Alignment.CenterStart
+
+
+        ) {
+            Text(
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .wrapContentHeight(),
+                text = " ${index + 1}.$it",
+            )
+
+
+        }
+
+
+    }
+
 }
 
 
@@ -85,11 +192,9 @@ fun RecipeAddScreen(
     recipeAddViewModel: RecipeAddViewModel = viewModel(),
     onSucessfullyCreateRecipe: () -> Unit
 ) {
-    val listItems = remember { mutableStateListOf<String>() }
-    var text by rememberSaveable { mutableStateOf("") }
-    var preparoText by rememberSaveable { mutableStateOf("") }
-    var preparoItems = remember { mutableStateListOf<String>() }
-    val manager: IOManager = IOManager()
+    val ingredients = remember { mutableStateListOf<String>() }
+    var instructionsItems = remember { mutableStateListOf<String>() }
+    val manager = IOManager()
     val bitmap = remember {
         mutableStateOf<Bitmap?>(null)
     }
@@ -101,46 +206,43 @@ fun RecipeAddScreen(
     var loading by rememberSaveable { mutableStateOf(false) }
 
 
+
+
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(10.dp)
+
     ) {
-        Column(modifier = Modifier.verticalScroll(scrollState)) {
+        Column(
+            modifier = Modifier
+                .verticalScroll(scrollState)
+                .padding(start = 30.dp, top = 30.dp, end = 30.dp)
+        ) {
+
             Column() {
-                OutlinedTextField(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(60.dp)
-                        .background(Color.White, RoundedCornerShape(5.dp)),
+                CustomOutlinedTextField(
                     value = title,
-                    label = { Text("Título") },
-                    onValueChange = { it -> title = it },
+                    label = { Text(text = "Titulo") },
+                    onValueChange = { title = it },
                 )
 
-                OutlinedTextField(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(60.dp)
-                        .background(Color.White, RoundedCornerShape(5.dp)),
+                CustomOutlinedTextField(
                     value = subtitle,
-                    label = { Text("Sub-título") },
-                    onValueChange = { it -> subtitle = it },
+                    label = { Text(text = "Sub-Título") },
+                    onValueChange = { subtitle = it },
                 )
 
-                OutlinedTextField(
+                CustomOutlinedTextField(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(120.dp)
-                        .padding(top = 10.dp)
-                        .background(Color.White, RoundedCornerShape(5.dp)),
-                    shape = RoundedCornerShape(5.dp),
+                        .height(120.dp),
                     value = description,
-                    label = { Text("Descrição") },
+                    label = { Text(text = "Descrição") },
                     onValueChange = { description = it },
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                     maxLines = 3
                 )
+
 
             }
 
@@ -148,69 +250,25 @@ fun RecipeAddScreen(
 
             Text("Ingredientes:", style = MaterialTheme.typography.titleLarge)
 
-            Row() {
-                TextField(value = text, onValueChange = { text = it })
-
-                OutlinedButton(modifier = Modifier.padding(horizontal = 10.dp),
-                    border = BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary),
-                    shape = RoundedCornerShape(80),
-                    onClick = {
-                        if (text.isNotEmpty()) {
-                            listItems.add(text)
-                        }
-                    }) {
-                    Icon(imageVector = Icons.Filled.Add, contentDescription = "Add")
-                }
-            }
+            RegisterItems(listItem = ingredients)
 
 
-            listItems.map { it ->
-                OutlinedCard(
-                    modifier = Modifier
-                        .padding(2.dp)
-                        .height(50.dp)
-                        .fillMaxWidth(0.7f)
-                ) {
-                    Text(modifier = Modifier.padding(10.dp), text = it)
-                }
-            }
 
             Text(
                 "Preparo:",
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(top = 10.dp, bottom = 4.dp)
             )
 
-            Row() {
-                TextField(value = preparoText, onValueChange = { preparoText = it })
+            RegisterItems(listItem = instructionsItems)
 
-                OutlinedButton(modifier = Modifier.padding(horizontal = 10.dp),
-                    border = BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary),
-                    shape = RoundedCornerShape(80),
-                    onClick = {
-                        if (preparoText.isNotEmpty()) {
-                            preparoItems.add(preparoText)
-                        }
-                    }) {
-                    Icon(imageVector = Icons.Filled.Add, contentDescription = "Add")
-                }
-            }
 
-            preparoItems.map { it ->
-                OutlinedCard(
-                    modifier = Modifier
-                        .padding(2.dp)
-                        .height(50.dp)
-                        .fillMaxWidth(0.7f)
-                ) {
-                    Text(text = it)
-                }
-            }
 
             Button(
                 modifier = Modifier
-                    .fillMaxWidth(0.5f)
-                    .align(Alignment.CenterHorizontally),
-                onClick = {
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 10.dp)
+                    .fillMaxWidth(0.75f), onClick = {
                     try {
                         loading = true;
                         val fileName = "$title.jpeg";
@@ -220,19 +278,20 @@ fun RecipeAddScreen(
                                 recipeEntity = RecipeEntity(
                                     subtitle = subtitle,
                                     title = title,
-                                    instructions = preparoItems,
-                                    ingredients = listItems,
+                                    instructions = instructionsItems,
+                                    ingredients = ingredients,
                                     id = null,
                                     imagePath = fileName
-                                )
+                                ), onComplete = { onSucessfullyCreateRecipe() }
+
                             )
 
                             manager.uploadImage(
                                 application = application, fileName = fileName, bitmap = bitmap
                             )
 
+
                         }
-                        onSucessfullyCreateRecipe()
 
 
                     } catch (_: Exception) {
@@ -241,8 +300,7 @@ fun RecipeAddScreen(
                         loading = false
                     }
 
-                },
-                enabled = !loading
+                }, enabled = !loading
             ) {
                 Text(text = "Cadastrar")
             }

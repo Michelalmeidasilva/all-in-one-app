@@ -11,6 +11,9 @@ import com.michel.galileu.ui.screens.RecipeAddScreen
 import com.michel.galileu.ui.screens.RecipeDetailsScreen
 import com.michel.galileu.ui.screens.RecipeScreen
 import com.michel.galileu.ui.screens.SettingsScreen
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
+import java.util.concurrent.TimeUnit
 
 /*
  * Copyright 2022 The Android Open Source Project
@@ -69,7 +72,9 @@ fun GalileuNavHost(
         composable(route = RecipeAddNavigation.route) {
             RecipeAddScreen(
                 application,
-                onSucessfullyCreateRecipe = { navController.navigateToRecipeScreen() })
+                onSucessfullyCreateRecipe = {
+                    navController.navigateToRecipeScreen()
+                })
         }
     }
 }
@@ -96,7 +101,7 @@ private fun NavHostController.navigateToDetailsScreen(accountType: Any) {
 }
 
 private fun NavHostController.navigateToRecipeScreen() {
-    this.navigateSingleTopTo("${RecipesNavigation.route}")
+    this.navigate(RecipesNavigation.route)
 }
 
 
