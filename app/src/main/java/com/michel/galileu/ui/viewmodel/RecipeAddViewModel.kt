@@ -23,6 +23,5 @@ class RecipeAddViewModel(application: Application) : AndroidViewModel(applicatio
                 }
             }
         }
-
     }
 }

@@ -22,36 +22,22 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 import com.michel.galileu.ui.viewmodel.RecipeViewModel
 import com.michel.galileu.utils.IOManager
-
-
-@Composable
-fun IngredientsList(ingredients: List<String>?) {
-    if (ingredients?.isEmpty() == false) {
-        Text(
-            "Preparo:",
-            modifier = Modifier.padding(all = 4.dp),
-            style = MaterialTheme.typography.titleLarge
-        )
-        ingredients.mapIndexed { index, it ->
-            Text(text = "${index + 1}.  $it")
-        }
-    }
-}
-
+import com.michel.galileu.utils.changeListType
 
 @Composable
-fun InstructionsList(instructions: List<String>?) {
-    if (instructions?.isEmpty() == false) {
-        Text("Ingredientes:", style = MaterialTheme.typography.titleLarge)
+fun ListItems(items: List<String>?, listType: ListType, title: String) {
+    if (items?.isEmpty() == false) {
+        Text(title, style = MaterialTheme.typography.titleLarge)
 
-        instructions.mapIndexed { index, it ->
+        items.mapIndexed { index, it ->
             Text(
                 modifier = Modifier.padding(
                     all = 4.dp
-                ), text = "${index + 1}.  $it"
+                ), text = "${changeListType(listType, index + 1)} $it"
             )
         }
     }
+
 }
 
 @Composable
@@ -65,7 +51,7 @@ fun AboutRecipe(title: String?, subtitle: String?, imageUrl: String?, applicatio
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if (imageUrl !== null && imageUrl.isNotEmpty()) {
+        if (imageUrl?.isBlank() == false) {
             manager.getImage(application, imageUrl)?.let {
                 Image(
                     bitmap = it,
@@ -76,8 +62,6 @@ fun AboutRecipe(title: String?, subtitle: String?, imageUrl: String?, applicatio
                 )
             }
         }
-
-
     }
 
     Column(modifier = Modifier.padding(all = 8.dp)) {
@@ -109,13 +93,11 @@ fun RecipeDetailsScreen(
         viewModel.fetchRecipe(idString)
     }
 
-
     val recipeState by viewModel.uiState.collectAsState()
     val scrollState = rememberScrollState()
 
     Box(modifier = modifier.fillMaxSize()) {
         Column(modifier = Modifier.verticalScroll(scrollState)) {
-
             AboutRecipe(
                 title = recipeState.title,
                 subtitle = recipeState.subtitle,
@@ -126,11 +108,17 @@ fun RecipeDetailsScreen(
             Spacer(modifier = Modifier.height(4.dp))
 
             Column(modifier = Modifier.padding(all = 8.dp)) {
-                InstructionsList(instructions = recipeState.instructions)
-                IngredientsList(ingredients = recipeState.ingredients)
+                ListItems(
+                    items = recipeState.instructions as List<String>?,
+                    ListType.ORDERED_LIST,
+                    "Ingredientes"
+                )
+                ListItems(
+                    items = recipeState.ingredients as List<String>?,
+                    ListType.NUMBERED_LIST,
+                    "Preparo"
+                )
             }
         }
     }
-
-
 }

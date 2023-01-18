@@ -41,11 +41,6 @@ fun GalileuApp(application: Application) {
         val currentBackStack by navController.currentBackStackEntryAsState()
         val currentDestination = currentBackStack?.destination;
         
-
-        val currentScreen =
-            bottomNavItems.find { it.route == currentDestination?.route } ?: RecipesNavigation
-
-
         Scaffold(
             topBar = {
 //                        if(currentScreen.route == RecipesNavigation.route){

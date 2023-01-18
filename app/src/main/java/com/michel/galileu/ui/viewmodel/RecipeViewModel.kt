@@ -1,13 +1,10 @@
 package com.michel.galileu.ui.viewmodel
 
 import android.app.Application
-import android.graphics.Bitmap
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.michel.galileu.data.entities.RecipeEntity
 import com.michel.galileu.data.repository.RecipeRepository
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 

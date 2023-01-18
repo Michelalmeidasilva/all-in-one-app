@@ -12,6 +12,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -23,17 +24,19 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.michel.galileu.data.entities.ItemForm
 import com.michel.galileu.data.entities.RecipeEntity
 import com.michel.galileu.ui.viewmodel.RecipeAddViewModel
 import com.michel.galileu.utils.IOManager
+import com.michel.galileu.utils.changeListType
 import kotlinx.coroutines.*
+import org.burnoutcrew.reorderable.*
 
 @Composable
 fun RequestContentPermission(application: Application, bitmap: MutableState<Bitmap?>) {
@@ -41,7 +44,6 @@ fun RequestContentPermission(application: Application, bitmap: MutableState<Bitm
         mutableStateOf<Uri?>(null)
     }
     val context = LocalContext.current
-
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -56,7 +58,6 @@ fun RequestContentPermission(application: Application, bitmap: MutableState<Bitm
             Row {
                 Text(text = "Selecione a imagem.")
             }
-
         }
 
         imageUri?.let {
@@ -67,8 +68,6 @@ fun RequestContentPermission(application: Application, bitmap: MutableState<Bitm
                 val source = ImageDecoder.createSource(context.contentResolver, it)
                 bitmap.value = ImageDecoder.decodeBitmap(source)
             }
-
-
 
             bitmap.value?.let { btm ->
                 Row(
@@ -87,17 +86,25 @@ fun RequestContentPermission(application: Application, bitmap: MutableState<Bitm
                         text = "Imagem adicionada."
                     )
                 }
-
-
             }
         }
     }
 }
 
+enum class ListType {
+    BULLET_LIST, ORDERED_LIST, NUMBERED_LIST
+}
 
 @Composable
-fun RegisterItems(listItem: SnapshotStateList<String>) {
-    var item by rememberSaveable { mutableStateOf("") }
+fun RegisterItems(itemsList: MutableList<ItemForm>, typeList: ListType = ListType.ORDERED_LIST) {
+    var text by rememberSaveable { mutableStateOf("") }
+
+    fun addItemToList() {
+        if (!text.isBlank()) {
+            itemsList.add(ItemForm(text, false))
+            text = "";
+        }
+    }
 
     Row(modifier = Modifier.padding(bottom = 8.dp)) {
         CustomOutlinedTextField(
@@ -107,33 +114,19 @@ fun RegisterItems(listItem: SnapshotStateList<String>) {
                 .height(50.dp)
                 .background(Color.White, RoundedCornerShape(5.dp))
                 .onKeyEvent(
-
-
                 ) {
                     if (
                         it.nativeKeyEvent.keyCode == KEYCODE_ENTER
                     ) {
-                        if (item.isNotEmpty()) {
-                            listItem.add(item)
-                        }
-                        true
+                        addItemToList();
                     }
                     true
                 },
-            value = item,
+            value = text,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-            keyboardAction = KeyboardActions(
-                onDone = {
-                    if (item.isNotEmpty()) {
-                        listItem.add(item)
-                    }
-                }
-
-            ),
-            onValueChange = { item = it }
+            keyboardAction = KeyboardActions(onDone = { addItemToList() }),
+            onValueChange = { text = it }
         )
-
-
 
         OutlinedButton(modifier = Modifier
             .padding(horizontal = 10.dp)
@@ -141,12 +134,7 @@ fun RegisterItems(listItem: SnapshotStateList<String>) {
             .height(50.dp),
             border = BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary),
             shape = RoundedCornerShape(80),
-            onClick = {
-                if (item.isNotEmpty()) {
-                    listItem.add(item)
-
-                }
-            }) {
+            onClick = { addItemToList() }) {
             Icon(
                 modifier = Modifier.size(18.dp),
                 imageVector = Icons.Filled.Add,
@@ -156,43 +144,33 @@ fun RegisterItems(listItem: SnapshotStateList<String>) {
         }
     }
 
-
-    listItem.mapIndexed { index, it ->
+    itemsList.mapIndexed { index, it ->
         Box(
             modifier = Modifier
-                .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(12.dp))
-                .padding(top = 2.dp)
-                .defaultMinSize(22.dp)
-                .fillMaxWidth(0.75f),
-            contentAlignment = Alignment.CenterStart
-
-
+                .background(MaterialTheme.colorScheme.surface)
+                .height(32.dp)
+                .fillMaxWidth()
         ) {
             Text(
-                modifier = Modifier
-                    .padding(start = 8.dp)
-                    .wrapContentHeight(),
-                text = " ${index + 1}.$it",
+                text = "${changeListType(typeList, index + 1)} ${it.value}",
+                modifier = Modifier.clickable(onClick = {
+                    it.editable = !it.editable
+                }
+                )
             )
-
-
         }
-
-
     }
-
 }
 
-
-@OptIn(ExperimentalMaterial3Api::class, DelicateCoroutinesApi::class)
+@OptIn(DelicateCoroutinesApi::class)
 @Composable
 fun RecipeAddScreen(
     application: Application,
     recipeAddViewModel: RecipeAddViewModel = viewModel(),
-    onSucessfullyCreateRecipe: () -> Unit
+    onSuccessfullyCreateRecipe: () -> Unit
 ) {
-    val ingredients = remember { mutableStateListOf<String>() }
-    var instructionsItems = remember { mutableStateListOf<String>() }
+    val ingredients = remember { mutableStateListOf<ItemForm>() }
+    val instructionsItems = remember { mutableStateListOf<ItemForm>() }
     val manager = IOManager()
     val bitmap = remember {
         mutableStateOf<Bitmap?>(null)
@@ -204,19 +182,20 @@ fun RecipeAddScreen(
     var description by rememberSaveable { mutableStateOf("") }
     var loading by rememberSaveable { mutableStateOf(false) }
 
-
-
-
     Box(
         modifier = Modifier
             .fillMaxSize()
-
     ) {
         Column(
             modifier = Modifier
                 .verticalScroll(scrollState)
                 .padding(start = 30.dp, top = 30.dp, end = 30.dp)
         ) {
+            Text(
+                text = "Cadastro de Receita",
+                modifier = Modifier.padding(2.dp),
+                style = MaterialTheme.typography.headlineSmall
+            )
 
             Column() {
                 CustomOutlinedTextField(
@@ -241,17 +220,13 @@ fun RecipeAddScreen(
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                     maxLines = 3
                 )
-
-
             }
 
             RequestContentPermission(application, bitmap)
 
             Text("Ingredientes:", style = MaterialTheme.typography.titleLarge)
 
-            RegisterItems(listItem = ingredients)
-
-
+            RegisterItems(itemsList = ingredients, ListType.ORDERED_LIST)
 
             Text(
                 "Preparo:",
@@ -259,9 +234,7 @@ fun RecipeAddScreen(
                 modifier = Modifier.padding(top = 10.dp, bottom = 4.dp)
             )
 
-            RegisterItems(listItem = instructionsItems)
-
-
+            RegisterItems(itemsList = instructionsItems, ListType.NUMBERED_LIST)
 
             Button(
                 modifier = Modifier
@@ -270,35 +243,28 @@ fun RecipeAddScreen(
                     .fillMaxWidth(0.75f), onClick = {
                     try {
                         loading = true;
-                        val fileName = "$title.jpeg";
+                        val fileName = if (bitmap.value !== null) "$title.jpeg"; else ""
 
                         GlobalScope.launch() {
                             recipeAddViewModel.addRecipe(
                                 recipeEntity = RecipeEntity(
                                     subtitle = subtitle,
                                     title = title,
-                                    instructions = instructionsItems,
-                                    ingredients = ingredients,
+                                    instructions = instructionsItems.map { it -> it.value },
+                                    ingredients = ingredients.map { it -> it.value },
                                     id = null,
-                                    imagePath = fileName
-                                ), onComplete = { onSucessfullyCreateRecipe() }
+                                    imagePath = fileName,
+                                ), onComplete = { onSuccessfullyCreateRecipe() }
 
                             )
-
                             manager.uploadImage(
                                 application = application, fileName = fileName, bitmap = bitmap
                             )
-
-
                         }
-
-
                     } catch (_: Exception) {
-
                     } finally {
                         loading = false
                     }
-
                 }, enabled = !loading
             ) {
                 Text(text = "Cadastrar")

@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.michel.galileu.data.entities.RecipeEntity
 import com.michel.galileu.data.repository.RecipeRepository
-import com.michel.galileu.data.room.getDatabase
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
