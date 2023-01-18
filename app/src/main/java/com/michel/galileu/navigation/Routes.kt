@@ -15,7 +15,9 @@
  */
 
 package com.michel.galileu.navigation
+
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Build
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -39,23 +41,26 @@ interface NavigationSettings {
 object RecipesNavigation : NavigationSettings {
     override val route = "recipes"
     override val name = "Recipes"
-    override val icon: ImageVector =  Icons.Rounded.Home;
+    override val icon: ImageVector = Icons.Rounded.Home;
 }
 
+object RecipeSchedule : NavigationSettings {
+    override val route = "recipeSchedule"
+    override val name = "Recipe Schedule"
+    override val icon: ImageVector = Icons.Rounded.Build;
+}
 
 object SettingsNavigation : NavigationSettings {
     override val route = "settings"
-    override val icon: ImageVector =  Icons.Rounded.Settings;
+    override val icon: ImageVector = Icons.Rounded.Settings;
     override val name = "Settings"
 }
 
-
 object RecipeAddNavigation : NavigationSettings {
     override val route = "recipe-add"
-    override val icon: ImageVector =  Icons.Rounded.Settings;
+    override val icon: ImageVector = Icons.Rounded.Settings;
     override val name = "Recipe"
 }
-
 
 object RecipeDetailsNavigation : NavigationSettings {
     // Added for simplicity, this icon will not in fact be used, as SingleAccount isn't
@@ -76,8 +81,5 @@ object RecipeDetailsNavigation : NavigationSettings {
 }
 
 
-val routesItems = listOf(RecipesNavigation, SettingsNavigation)
-
-
-val bottomNavItems = listOf(RecipesNavigation, SettingsNavigation)
+val bottomNavItems = listOf(RecipesNavigation, SettingsNavigation, RecipeSchedule)
 
