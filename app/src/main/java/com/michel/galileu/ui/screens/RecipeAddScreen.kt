@@ -19,6 +19,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -182,6 +183,33 @@ fun RecipeAddScreen(
     var description by rememberSaveable { mutableStateOf("") }
     var loading by rememberSaveable { mutableStateOf(false) }
 
+    fun onRegisterRecipe() {
+        try {
+            loading = true;
+            val fileName = if (bitmap.value !== null) "$title.jpeg"; else ""
+
+            GlobalScope.launch() {
+                recipeAddViewModel.addRecipe(
+                    recipeEntity = RecipeEntity(
+                        subtitle = subtitle,
+                        title = title,
+                        instructions = instructionsItems.map { it -> it.value },
+                        ingredients = ingredients.map { it -> it.value },
+                        id = null,
+                        imagePath = fileName,
+                    ), onComplete = { onSuccessfullyCreateRecipe() }
+
+                )
+                manager.uploadImage(
+                    application = application, fileName = fileName, bitmap = bitmap
+                )
+            }
+        } catch (_: Exception) {
+        } finally {
+            loading = false
+        }
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -235,40 +263,22 @@ fun RecipeAddScreen(
             )
 
             RegisterItems(itemsList = instructionsItems, ListType.NUMBERED_LIST)
+        }
 
-            Button(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(top = 10.dp)
-                    .fillMaxWidth(0.75f), onClick = {
-                    try {
-                        loading = true;
-                        val fileName = if (bitmap.value !== null) "$title.jpeg"; else ""
+        FloatingActionButton(
+            containerColor = Color.White,
+            onClick = { onRegisterRecipe() },
+            modifier = Modifier
+                .padding(all = 4.dp)
+                .align(alignment = Alignment.BottomEnd)
 
-                        GlobalScope.launch() {
-                            recipeAddViewModel.addRecipe(
-                                recipeEntity = RecipeEntity(
-                                    subtitle = subtitle,
-                                    title = title,
-                                    instructions = instructionsItems.map { it -> it.value },
-                                    ingredients = ingredients.map { it -> it.value },
-                                    id = null,
-                                    imagePath = fileName,
-                                ), onComplete = { onSuccessfullyCreateRecipe() }
-
-                            )
-                            manager.uploadImage(
-                                application = application, fileName = fileName, bitmap = bitmap
-                            )
-                        }
-                    } catch (_: Exception) {
-                    } finally {
-                        loading = false
-                    }
-                }, enabled = !loading
-            ) {
-                Text(text = "Cadastrar")
-            }
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.CheckCircle,
+                contentDescription = "Finish",
+                modifier = Modifier.size(32.dp),
+                tint = Color.Green
+            )
         }
     }
 
