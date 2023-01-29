@@ -80,6 +80,20 @@ fun AboutRecipe(title: String?, subtitle: String?, imageUrl: String?, applicatio
 }
 
 
+/**
+ * Elementos:
+ *
+ * 1. Componente na header com Lixeira.
+ *
+ * Implementar um componente de gesture de listagem.
+ * - Ao pressionar vai selecionar o item.
+ * - Ele poderá excluir.
+ *
+ * - Ao pressionar algum item, vai mudar pra listagem de checkbox
+ *
+ */
+
+
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun RecipeDetailsScreen(

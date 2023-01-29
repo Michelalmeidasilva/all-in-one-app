@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class RecipeEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int? = null,
-    @ColumnInfo(name = "title") val title: String? = null,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @ColumnInfo(name = "title") val title: String = "",
     @ColumnInfo(name = "subtitle") val subtitle: String? = null,
     @ColumnInfo(name = "instructions") val instructions: List<String?>? = null,
     @ColumnInfo(name = "ingredients") val ingredients: List<String?>? = null,

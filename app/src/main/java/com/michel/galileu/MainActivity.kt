@@ -47,11 +47,12 @@ fun GalileuApp(application: Application) {
 //                            GalileuTopBar(currentScreen = currentScreen.name, onSearchValue = {})
 //                        }
             },
-            bottomBar = {
-                GalileuNavBar(
-                    currentScreen = currentDestination?.route,
-                    onClickNavBar = { navController.navigate(it) })
-            })
+//                GalileuNavBar(
+//                    currentScreen = currentDestination?.route,
+//                    onClickNavBar = { navController.navigate(it) })
+//            }//            bottomBar = {
+
+        )
         { contentPadding ->
             GalileuNavHost(navController, modifier = Modifier.padding(contentPadding), application)
         }

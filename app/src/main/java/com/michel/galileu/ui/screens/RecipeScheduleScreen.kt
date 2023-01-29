@@ -21,11 +21,7 @@ fun RecipeScheduleScreen(
 
     Box(modifier = modifier.fillMaxSize()) {
         Column(modifier = Modifier.verticalScroll(scrollState)) {
-
-
             Spacer(modifier = Modifier.height(4.dp))
-
-
         }
     }
 }

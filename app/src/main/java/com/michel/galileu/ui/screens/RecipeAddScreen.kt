@@ -195,7 +195,6 @@ fun RecipeAddScreen(
                         title = title,
                         instructions = instructionsItems.map { it -> it.value },
                         ingredients = ingredients.map { it -> it.value },
-                        id = null,
                         imagePath = fileName,
                     ), onComplete = { onSuccessfullyCreateRecipe() }
 

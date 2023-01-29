@@ -38,6 +38,16 @@ interface NavigationSettings {
 /**
  * Rally app navigation destinations
  */
+object HomeNavigation : NavigationSettings {
+    override val route = "home"
+    override val name = "Home"
+    override val icon: ImageVector = Icons.Rounded.Home;
+}
+
+
+/**
+ * Rally app navigation destinations
+ */
 object RecipesNavigation : NavigationSettings {
     override val route = "recipes"
     override val name = "Recipes"

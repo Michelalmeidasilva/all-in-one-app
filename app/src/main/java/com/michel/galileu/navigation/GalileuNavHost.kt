@@ -27,25 +27,23 @@ import com.michel.galileu.ui.screens.*
 
 @Composable
 fun GalileuNavHost(
-    navController: NavHostController,
-    modifier: Modifier = Modifier,
-    application: Application
+    navController: NavHostController, modifier: Modifier = Modifier, application: Application
 ) {
     NavHost(
         navController = navController,
-        startDestination = RecipesNavigation.route,
+        startDestination = HomeNavigation.route,
         modifier = modifier
     ) {
 
+        composable(route = HomeNavigation.route) {
+            HomeScreen(navController)
+        }
         composable(route = RecipesNavigation.route) {
-            RecipeScreen(
-                onRecipeDetailsClick = { typeArg ->
-                    navController.navigateToDetailsScreen(typeArg)
-                },
-                onAddRecipeClick = {
-                    navController.navigate(RecipeAddNavigation.route)
-                },
-                application = application
+            RecipeScreen(onRecipeDetailsClick = { typeArg ->
+                navController.navigateToDetailsScreen(typeArg)
+            }, onAddRecipeClick = {
+                navController.navigate(RecipeAddNavigation.route)
+            }, application = application
             )
         }
 
@@ -64,11 +62,9 @@ fun GalileuNavHost(
         }
 
         composable(route = RecipeAddNavigation.route) {
-            RecipeAddScreen(
-                application,
-                onSuccessfullyCreateRecipe = {
-                    navController.navigateToRecipeScreen()
-                })
+            RecipeAddScreen(application, onSuccessfullyCreateRecipe = {
+                navController.navigateToRecipeScreen()
+            })
         }
 
         composable(route = RecipeSchedule.route) {
@@ -77,22 +73,21 @@ fun GalileuNavHost(
     }
 }
 
-fun NavHostController.navigateSingleTopTo(route: String) =
-    this.navigate(route) {
-        // Pop up to the start destination of the graph to
-        // avoid building up a large stack of destinations
-        // on the back stack as users select items
-        popUpTo(
-            this@navigateSingleTopTo.graph.findStartDestination().id
-        ) {
-            saveState = true
-        }
-        // Avoid multiple copies of the same destination when
-        // reselecting the same item
-        launchSingleTop = true
-        // Restore state when reselecting a previously selected item
-        restoreState = true
+fun NavHostController.navigateSingleTopTo(route: String) = this.navigate(route) {
+    // Pop up to the start destination of the graph to
+    // avoid building up a large stack of destinations
+    // on the back stack as users select items
+    popUpTo(
+        this@navigateSingleTopTo.graph.findStartDestination().id
+    ) {
+        saveState = true
     }
+    // Avoid multiple copies of the same destination when
+    // reselecting the same item
+    launchSingleTop = true
+    // Restore state when reselecting a previously selected item
+    restoreState = true
+}
 
 private fun NavHostController.navigateToDetailsScreen(accountType: Any) {
     this.navigateSingleTopTo("${RecipeDetailsNavigation.route}/$accountType")
