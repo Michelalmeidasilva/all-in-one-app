@@ -37,7 +37,15 @@ platform :android do
   end
 
   lane :internal do
-    gradle(task: "clean assembleRelease")
-    upload_to_play_store_internal_app_sharing
+    apk_path = File.expand_path("..", Dir.pwd) + '/app/build/outputs/apk/release/app-release.apk'
+
+    gradle(task: "assemble", build_type: "Release")
+
+    upload_to_play_store(
+      track: 'internal',
+      skip_upload_aab: true,
+      apk: apk_path
+    )
+
   end
 end

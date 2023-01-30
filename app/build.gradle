@@ -10,12 +10,21 @@ android {
     namespace 'com.michel.galileu'
     compileSdk 33
 
+    signingConfigs {
+        release {
+            storeFile file("../.keystores/galileu.keystore")
+            storePassword 'galileuapp'
+            keyAlias 'my-galileu'
+            keyPassword 'galileuapp'
+        }
+    }
+
     defaultConfig {
         applicationId "com.michel.galileu"
         minSdk 26
         targetSdk 33
-        versionCode 3
-        versionName "1.0"
+        versionCode 4
+        versionName "1.0.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
@@ -26,6 +35,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
