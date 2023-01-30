@@ -21,5 +21,5 @@ interface RecipeDao {
     fun insertAll(vararg recipes: RecipeEntity)
 
     @Delete
-    fun delete(user: RecipeEntity)
+    fun delete(recipe: RecipeEntity)
 }

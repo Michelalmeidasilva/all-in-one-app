@@ -3,7 +3,6 @@ package com.michel.galileu.ui.screens
 import android.annotation.SuppressLint
 import android.app.Application
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,8 +24,10 @@ import androidx.compose.ui.unit.dp
 import com.michel.galileu.data.entities.RecipeEntity
 import com.michel.galileu.data.repository.RecipeRepository
 import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 data class ItemList(val value: RecipeEntity, var isSelected: Boolean)
@@ -57,7 +58,14 @@ fun RecipeScreen(
 
     Box(modifier = Modifier.fillMaxSize()) {
         PressionableList(onDeleteItens = {
-            recipesData.removeAll(recipesData.filter { it.isSelected })
+
+            GlobalScope.launch {
+                val recipesFiltered = recipesData.filter{ it.isSelected};
+
+                repository.removeRecipe(recipesFiltered.map { it.value })
+                recipesData.removeAll(recipesFiltered)
+            }
+
         }, onChangeRecipesData = { it, index ->
             if (recipesData[index].isSelected) {
                 recipesData[index] = it.copy(isSelected = false)
@@ -70,7 +78,6 @@ fun RecipeScreen(
             for (i in 0 until recipesData.size) {
                 recipesData[i] = recipesData[i].copy(isSelected = false)
             }
-//            recipesData.forEach { it.isSelected = false }
         })
 
         FloatingActionButton(
@@ -90,13 +97,11 @@ fun ActionsBar(
     onClearSelectedItens: () -> Unit,
     recipesData: MutableList<ItemList>
 ) {
-
     Card(
         shape = RectangleShape, // The TextFiled has rounded corners top left and right by default
         modifier = Modifier.height(56.dp)
     ) {
         Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
-
             if (recipesData.any { it.isSelected }) {
                 IconButton(onClick = { onClearSelectedItens() }) {
                     Icon(
@@ -104,10 +109,8 @@ fun ActionsBar(
                         contentDescription = "BACK",
                         modifier = Modifier
                             .size(24.dp)
-
                     )
                 }
-
                 IconButton(
                     modifier = Modifier.padding(start = 300.dp),
                     onClick = { onDeleteItens() }) {
@@ -116,20 +119,15 @@ fun ActionsBar(
                         contentDescription = "DELETE",
                         modifier = Modifier
                             .size(24.dp)
-
                     )
                 }
             } else {
                 Text("Whatever", modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 5.dp))
-
             }
-
         }
-
     }
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -174,7 +172,7 @@ fun SearchBar(state: MutableState<TextFieldValue>) {
                     )
                 }
             }
-        },
+        }
     )
 }
 
@@ -190,7 +188,11 @@ fun TopBar(
     searchTextValue: MutableState<TextFieldValue>,
     onClearSelectedItens: () -> Unit
 ) {
-    ActionsBar(onDeleteItens, onClearSelectedItens, recipesData)
+    if(recipesData.any { item -> item.isSelected}){
+        ActionsBar(onDeleteItens, onClearSelectedItens, recipesData)
+    } else {
+        SearchBar(searchTextValue)
+    }
 }
 
 

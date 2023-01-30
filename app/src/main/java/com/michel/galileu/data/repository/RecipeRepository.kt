@@ -37,4 +37,21 @@ class RecipeRepository(
 
         return data;
     }
+
+
+    suspend fun removeRecipe(recipes: List<RecipeEntity>) {
+        withContext(Dispatchers.IO) {
+            recipes.forEach {
+                databaseApp.recipeDao().delete(it)
+            }
+        }
+    }
+    suspend fun removeRecipe(recipe: RecipeEntity) {
+        withContext(Dispatchers.IO) {
+            databaseApp.recipeDao().delete(recipe)
+        }
+    }
+
+
+
 }
