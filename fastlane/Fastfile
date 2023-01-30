@@ -39,12 +39,15 @@ platform :android do
   lane :internal do
     apk_path = File.expand_path("..", Dir.pwd) + '/app/build/outputs/apk/release/app-release.apk'
 
-    gradle(task: "assemble", build_type: "Release")
+    gradle(
+      task: "bundle",
+      build_type: "Release"
+    )
 
     upload_to_play_store(
       track: 'internal',
-      skip_upload_aab: true,
-      apk: apk_path
+      skip_upload_aab: false,
+      skip_upload_apk: true
     )
 
   end
