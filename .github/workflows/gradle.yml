@@ -10,12 +10,14 @@ name: Java CI with Gradle
 on:
   pull_request:
     branches: [ "main" ]
+    types:
+      - closed
 
 permissions:
   contents: read
 
 jobs:
-  build:
+  if_merged:
     runs-on: macos-latest
 
     if: github.event.pull_request.merged == true
