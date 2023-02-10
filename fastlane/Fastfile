@@ -91,7 +91,7 @@ platform :android do
     puts(branch_name);
 
     git_commit(path: '.', message: "New android app release #{version}", skip_git_hooks: true)
-    push_to_git_remote(local_branch: branch_name, remote_branch: branch_name, force: true)
+    push_to_git_remote(local_branch: branch_name, remote_branch: branch_name)
     create_pull_request(
      repo: "Michelalmeidasilva/galileu",
      title: "New Release ${version}",
