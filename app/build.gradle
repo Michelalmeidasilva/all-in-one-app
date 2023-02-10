@@ -23,7 +23,7 @@ android {
         applicationId "com.michel.galileu"
         minSdk 26
         targetSdk 33
-        versionCode 4
+        versionCode 5
         versionName "1.0.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
