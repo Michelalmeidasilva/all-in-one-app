@@ -93,24 +93,24 @@ platform :android do
 
 
   lane :internal do
-    apk_path = File.expand_path("..", Dir.pwd) + '/app/build/outputs/apk/release/app-release.apk'
-
-    gradle(
-      task: "bundle",
-      build_type: "Release"
-    )
-
-    upload_to_play_store(
-      track: 'internal',
-      skip_upload_aab: false,
-      skip_upload_apk: true
-    )
-
-
-    increment_version_code(
-      gradle_file_path: "./app/build.gradle",
-      version_code: Actions.lane_context[SharedValues::BUILD_NUMBER]
-    )
+#     apk_path = File.expand_path("..", Dir.pwd) + '/app/build/outputs/apk/release/app-release.apk'
+#
+#     gradle(
+#       task: "bundle",
+#       build_type: "Release"
+#     )
+#
+#     upload_to_play_store(
+#       track: 'internal',
+#       skip_upload_aab: false,
+#       skip_upload_apk: true
+#     )
+#
+#
+#     increment_version_code(
+#       gradle_file_path: "./app/build.gradle",
+#       version_code: Actions.lane_context[SharedValues::BUILD_NUMBER]
+#     )
 
     get_version_code(track_name: "internal")
 
