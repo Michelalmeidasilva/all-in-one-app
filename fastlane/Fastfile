@@ -50,7 +50,7 @@ platform :android do
   end
 
 
-  lane :deply_homolog do
+  lane :deploy_homolog do
     create_tag()
     internal();
   end
