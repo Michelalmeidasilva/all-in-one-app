@@ -75,6 +75,30 @@ platform :android do
 
 
 
+
+
+  lane :commit_version do
+
+    version = #{Actions.lane_context[SharedValues::VERSION_NUMBER] +1}-build-#{Actions.lane_context[SharedValues::BUILD_NUMBER]}
+#     version = "#{get_version_name(gradle_file_path: "./app/build.gradle")}-build-#{Integer(get_version_code)}"
+    branch_name = "release/android-#{version}"
+
+    sh "cd .. && git checkout -b #{branch_name}"
+
+    git_commit(path: '.', message: "New android app release #{version}", skip_git_hooks: true)
+
+    push_to_git_remote(no_verify: true, local_branch: branch_name, remote_branch: branch_name, force: true)
+
+    create_pull_request(
+     repo: "Michelalmeidasilva/galileu",
+     title: "New Release ${version}",
+     head: branch_name,       # optional, defaults to current branch name
+     base: "develop", # optional, defaults to "master"
+     body: "Please pull this in!",       # optional
+    )
+  end
+
+
   lane :internal do
     apk_path = File.expand_path("..", Dir.pwd) + '/app/build/outputs/apk/release/app-release.apk'
 
@@ -90,5 +114,6 @@ platform :android do
     )
 
     increment_build_number()
+    commit_version()
   end
 end
