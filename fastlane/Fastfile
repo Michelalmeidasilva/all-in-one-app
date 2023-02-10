@@ -10,9 +10,10 @@
 #     https://docs.fastlane.tools/plugins/available-plugins
 #
 
-# Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
+fastlane_require "dotenv"
+Dotenv.load ".env.secret"
 
+# Uncomment the line if you want fastlane to automatically update itself
 default_platform(:android)
 
 platform :android do
@@ -36,6 +37,44 @@ platform :android do
     upload_to_play_store
   end
 
+  lane :create_tag do
+    get_version_code(track_name: "internal")
+
+    tagName = "builds/release-#{Actions.lane_context[SharedValues::VERSION_NUMBER]}-build-#{Actions.lane_context[SharedValues::BUILD_NUMBER]}"
+
+    add_git_tag(
+        tag: tagName
+    )
+
+    push_git_tags();
+  end
+
+
+  lane :deply_homolog do
+    create_tag()
+    internal();
+  end
+
+
+  lane :get_version_code do |values|
+    desc "Bumps the release name and code version on the project"
+    track_name = values[:track_name]
+
+    Actions.lane_context[SharedValues::BUILD_NUMBER] = google_play_track_version_codes(
+      track: track_name,
+      package_name: ENV["PACKAGE_NAME"],
+      json_key: ENV["GOOGLE_API_ACCESS_PATH_FILE"],
+     )[0]
+
+    Actions.lane_context[SharedValues::VERSION_NUMBER] = google_play_track_release_names(
+      track: track_name,
+      package_name: ENV["PACKAGE_NAME"],
+      json_key: ENV["GOOGLE_API_ACCESS_PATH_FILE"],
+    )[0]
+  end
+
+
+
   lane :internal do
     apk_path = File.expand_path("..", Dir.pwd) + '/app/build/outputs/apk/release/app-release.apk'
 
@@ -50,5 +89,6 @@ platform :android do
       skip_upload_apk: true
     )
 
+    increment_build_number()
   end
 end

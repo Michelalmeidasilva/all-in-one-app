@@ -39,6 +39,22 @@ Submit a new Beta Build to Crashlytics Beta
 
 Deploy a new version to the Google Play
 
+### android create_tag
+
+```sh
+[bundle exec] fastlane android create_tag
+```
+
+
+
+### android get_version_code
+
+```sh
+[bundle exec] fastlane android get_version_code
+```
+
+
+
 ### android internal
 
 ```sh
