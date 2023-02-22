@@ -13,27 +13,25 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.MutableLiveData
 
 
 @ExperimentalFoundationApi
 @Composable
-fun PressionableList(
+fun RecipeList(
     onDeleteItens: () -> Unit,
     onUpdateRecipeList: (value: ItemList, index: Int) -> Unit,
     onClearSelectedItens: () -> Unit,
-    recipesData: MutableLiveData<MutableList<ItemList>>,
+    recipesData: List<ItemList>,
     onRecipeDetailsClick: (Int) -> Unit,
-    isSelectedValues: () -> Boolean,
-    isSelectedRecipe: (index: Int) -> Boolean
+    isSelectedValues: Boolean,
 ) {
     val searchTextValue = remember { mutableStateOf(TextFieldValue("")) }
 
 
     Box(modifier = Modifier.fillMaxSize()) {
-        TopBar(recipesData.value!!, onDeleteItens= {
+        TopBar(recipesData, onDeleteItens = {
             onDeleteItens()
-        },  onClearSelectedItens, isEmptySelect = false, searchInput = SearchInput(text = searchTextValue.value, onClearText = { searchTextValue.value = TextFieldValue("")}, onChangeText = {
+        },  onClearSelectedItens, isEmptySelect = isSelectedValues, searchInput = SearchInput(text = searchTextValue.value, onClearText = { searchTextValue.value = TextFieldValue("")}, onChangeText = {
             searchTextValue.value = it
         })  )
         LazyColumn(
@@ -41,13 +39,12 @@ fun PressionableList(
                 .absoluteOffset(y = 60.dp)
                 .padding(all = 4.dp)
         ) {
-            itemsIndexed(recipesData.value!!) { index, item ->
+            itemsIndexed(items = recipesData) { index, item ->
                 RecipeCard(
-                    recipeData = recipesData.value!![index],
+                    recipeData = item,
                     onPressCheckBox = {
                         onUpdateRecipeList(item, index)
                     },
-                    isSelected = {  isSelectedRecipe(index) },
                     isSelectedValues = isSelectedValues
                 ) {
                     onRecipeDetailsClick(item.value.id)

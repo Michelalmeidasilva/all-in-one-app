@@ -24,22 +24,21 @@ import androidx.compose.ui.unit.dp
 fun RecipeCard(
     recipeData: ItemList,
     onPressCheckBox: () -> Unit,
-    isSelected: () -> Boolean,
-    isSelectedValues: () -> Boolean,
+    isSelectedValues: Boolean,
     onRecipeDetailsClick: (Int) -> Unit
 ) {
 
     Row() {
         ElevatedCard(
             colors = CardDefaults.cardColors(
-                containerColor = if (isSelected()) Color.Blue else MaterialTheme.colorScheme.background,
+                containerColor = if (recipeData.isSelected) Color.Gray else MaterialTheme.colorScheme.background,
             ),
             modifier = Modifier
                 .padding(4.dp)
                 .fillMaxWidth()
                 .height(75.dp)
                 .combinedClickable(onClick = {
-                    if (isSelectedValues()) {
+                    if (isSelectedValues) {
                         onPressCheckBox()
                     } else {
                         onRecipeDetailsClick(recipeData.value.id)

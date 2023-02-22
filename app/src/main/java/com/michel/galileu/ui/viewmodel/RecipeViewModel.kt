@@ -17,13 +17,13 @@ class RecipeScreenUiState(
 
 
 class RecipeViewModel(application: Application) : AndroidViewModel(application) {
-    private val _uiState = MutableLiveData(RecipeScreenUiState())
-    val uiState: LiveData<RecipeScreenUiState> = _uiState;
+    private val _uiState = MutableStateFlow(RecipeScreenUiState())
+    val uiState = _uiState.asStateFlow();
 
     private val repository: RecipeRepository = RecipeRepository(application)
 
-    private val _recipesData = MutableLiveData<MutableList<ItemList>>()
-    val recipesData: MutableLiveData<MutableList<ItemList>> = _recipesData;
+    private val _recipesData = MutableStateFlow<List<ItemList>>(emptyList())
+    val recipesData= _recipesData.asStateFlow();
 
     init {
         try {
@@ -40,15 +40,19 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     fun removeAllSelectedRecipes(){
         try {
             val recipesFiltered = recipesData.value?.filter{ it.isSelected};
-            println(recipesFiltered);
 
             viewModelScope.launch{
-                if (recipesFiltered != null) {
+                if (recipesFiltered != null) { //
                     repository.removeRecipe(recipesFiltered.map { item -> item.value })
-                    _recipesData.value = repository.getRecipes().map {
-                        ItemList(it, isSelected = false);
-                    }.toMutableList();
-                    _uiState.postValue(RecipeScreenUiState(anyValueSelected = false))
+
+                    _recipesData.update {
+                        val recipesUpdated = repository.getRecipes();
+                        recipesUpdated.map { updated -> ItemList(value = updated, isSelected = false) }
+                    }
+
+                    _uiState.update {
+                        RecipeScreenUiState(anyValueSelected = false)
+                    }
                 }
             }
         }catch(err: Exception){
@@ -59,16 +63,22 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     private fun updateRecipesData(index: Int, recipe: ItemList){
-        _recipesData.value?.set(index, recipe)
+        val valuesUpdated = _recipesData.value.mapIndexed{i, item -> if(index == i ){ recipe} else item  }
+
+        _recipesData.update {
+            valuesUpdated
+        }
     }
 
 
     private fun hasAnyValueSelected() {
-        _uiState.setValue(recipesData.value?.let { RecipeScreenUiState(anyValueSelected = it.any{ it.isSelected}) })
+        _uiState.update {
+            RecipeScreenUiState(anyValueSelected = _recipesData.value.any{ it.isSelected})
+        }
     }
 
     fun updateSelectedRecipe(recipeData: ItemList, index: Int) {
-        if (_recipesData.value?.get(index)?.isSelected == true) {
+        if (_recipesData.value[index].isSelected) {
             updateRecipesData(index, recipeData.copy(isSelected = false));
         } else {
             updateRecipesData(index, recipeData.copy(isSelected = true));
@@ -80,24 +90,20 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     fun clearSelectedRecipes() {
         viewModelScope.launch {
             try {
-                println(_recipesData.value);
-
-                _recipesData.value?.replaceAll {
-                    it.isSelected = false
+                val clearRecipesUpdated = _recipesData.value.map {
+                    it.isSelected = false;
                     it
                 }
+                _recipesData.update {
+                    clearRecipesUpdated
 
-                println(_recipesData.value);
+                }
 
-            }catch(err: Exception){
+            } catch(err: Exception){
                 println(err.stackTrace)
             }
         }
 
     }
 
-    fun isRecipeSelected(index: Int): Boolean {
-        println(_recipesData.value!![index])
-        return _recipesData.value!![index].isSelected
-    }
 }

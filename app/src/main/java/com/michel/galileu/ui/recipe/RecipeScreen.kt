@@ -3,7 +3,6 @@ package com.michel.galileu.ui.recipe
 import android.annotation.SuppressLint
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -11,7 +10,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.michel.galileu.data.entities.RecipeEntity
@@ -27,10 +25,11 @@ fun RecipeScreen(
     onRecipeDetailsClick: (Int) -> Unit = {},
     recipeViewModel:  RecipeViewModel = viewModel(),
     ) {
+    val recipesData = recipeViewModel.recipesData.collectAsState().value;
+    val uiState = recipeViewModel.uiState.collectAsState().value;
 
     Box(modifier = Modifier.fillMaxSize()) {
-        recipeViewModel.recipesData.value?.let {
-            PressionableList(
+            RecipeList(
                 onDeleteItens = {
                     recipeViewModel.removeAllSelectedRecipes()
                 },
@@ -42,15 +41,11 @@ fun RecipeScreen(
                 onClearSelectedItens = {
                     recipeViewModel.clearSelectedRecipes();
                 },
-                recipeViewModel.recipesData,
+                recipesData,
                 onRecipeDetailsClick = onRecipeDetailsClick,
-                isSelectedValues = {
-                    recipeViewModel.uiState.value!!.anyValueSelected
-                }
-            ) { index ->
-                recipeViewModel.isRecipeSelected(index)
-            }
-        }
+                isSelectedValues = uiState.anyValueSelected
+            )
+
 
         FloatingActionButton(
             onClick = onAddRecipeClick,
