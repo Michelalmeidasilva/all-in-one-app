@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.michel.galileu.ui.screens.*
+import com.michel.galileu.ui.recipe.RecipeScreen
 
 /*
  * Copyright 2022 The Android Open Source Project
@@ -43,7 +44,7 @@ fun GalileuNavHost(
                 navController.navigateToDetailsScreen(typeArg)
             }, onAddRecipeClick = {
                 navController.navigate(RecipeAddNavigation.route)
-            }, application = application
+            }
             )
         }
 

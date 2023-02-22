@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.michel.galileu.ui.viewmodel.RecipeDetailsViewModel
 
 import com.michel.galileu.ui.viewmodel.RecipeViewModel
 import com.michel.galileu.utils.IOManager
@@ -100,7 +101,7 @@ fun RecipeDetailsScreen(
     idString: Int,
     modifier: Modifier = Modifier,
     application: Application,
-    viewModel: RecipeViewModel = viewModel()
+    viewModel: RecipeDetailsViewModel = viewModel()
 
 ) {
     LaunchedEffect(Unit) {

@@ -249,7 +249,7 @@ fun RecipeAddScreen(
                 )
             }
 
-            RequestContentPermission(application, bitmap)
+//            RequestContentPermission(application, bitmap)
 
             Text("Ingredientes:", style = MaterialTheme.typography.titleLarge)
 
