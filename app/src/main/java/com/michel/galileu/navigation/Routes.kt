@@ -17,10 +17,7 @@
 package com.michel.galileu.navigation
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AccountBox
-import androidx.compose.material.icons.rounded.Build
-import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -56,15 +53,23 @@ object RecipesNavigation : NavigationSettings {
 }
 
 object RecipeSchedule : NavigationSettings {
-    override val route = "recipeSchedule"
+    override val route = "recipe-schedule"
     override val name = "Agenda"
     override val icon: ImageVector = Icons.Rounded.AccountBox;
 }
 
+object RecipeMenu : NavigationSettings {
+    override val route = "recipe-menu"
+    override val name = "Cardápio"
+    override val icon: ImageVector = Icons.Rounded.Info;
+}
+
+
+
 object SettingsNavigation : NavigationSettings {
     override val route = "settings"
     override val icon: ImageVector = Icons.Rounded.Settings;
-    override val name = "Config"
+    override val name = "menu"
 }
 
 object RecipeAddNavigation : NavigationSettings {
@@ -92,5 +97,5 @@ object RecipeDetailsNavigation : NavigationSettings {
 }
 
 
-val bottomNavItems = listOf(RecipesNavigation, RecipeSchedule, SettingsNavigation)
+val bottomNavItems = listOf(RecipesNavigation, RecipeSchedule, RecipeMenu, SettingsNavigation)
 

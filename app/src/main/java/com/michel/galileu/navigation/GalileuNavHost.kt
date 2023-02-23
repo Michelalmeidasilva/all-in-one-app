@@ -70,6 +70,11 @@ fun GalileuNavHost(
         composable(route = RecipeSchedule.route) {
             RecipeScheduleScreen(modifier, application)
         }
+
+        composable(route = RecipeMenu.route) {
+            RecipeMenuScreen(modifier, application)
+        }
+
     }
 }
 
