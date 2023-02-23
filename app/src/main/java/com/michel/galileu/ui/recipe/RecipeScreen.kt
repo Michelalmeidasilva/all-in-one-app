@@ -36,14 +36,14 @@ fun RecipeScreen(
                 onUpdateRecipeList = { it, index ->
                     recipeViewModel.updateSelectedRecipe(it, index);
 
-                    println(recipeViewModel.uiState.value!!.anyValueSelected)
+                    println(recipeViewModel.uiState.value!!.isAnyValueSelected)
                 },
                 onClearSelectedItens = {
                     recipeViewModel.clearSelectedRecipes();
                 },
                 recipesData,
                 onRecipeDetailsClick = onRecipeDetailsClick,
-                isSelectedValues = uiState.anyValueSelected
+                isSelectedValues = uiState.isAnyValueSelected
             )
 
 

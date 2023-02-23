@@ -2,8 +2,6 @@ package com.michel.galileu.ui.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.michel.galileu.data.repository.RecipeRepository
 import com.michel.galileu.ui.recipe.ItemList
@@ -12,7 +10,7 @@ import kotlinx.coroutines.launch
 
 
 class RecipeScreenUiState(
-    val anyValueSelected: Boolean = false,
+    val isAnyValueSelected: Boolean = false,
 )
 
 
@@ -42,17 +40,15 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
             val recipesFiltered = recipesData.value?.filter{ it.isSelected};
 
             viewModelScope.launch{
-                if (recipesFiltered != null) { //
-                    repository.removeRecipe(recipesFiltered.map { item -> item.value })
+                repository.removeRecipe(recipesFiltered.map { item -> item.value })
 
-                    _recipesData.update {
-                        val recipesUpdated = repository.getRecipes();
-                        recipesUpdated.map { updated -> ItemList(value = updated, isSelected = false) }
-                    }
+                _recipesData.update {
+                    val recipesUpdated = repository.getRecipes();
+                    recipesUpdated.map { updated -> ItemList(value = updated, isSelected = false) }
+                }
 
-                    _uiState.update {
-                        RecipeScreenUiState(anyValueSelected = false)
-                    }
+                _uiState.update {
+                    RecipeScreenUiState(isAnyValueSelected = false)
                 }
             }
         }catch(err: Exception){
@@ -73,7 +69,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
 
     private fun hasAnyValueSelected() {
         _uiState.update {
-            RecipeScreenUiState(anyValueSelected = _recipesData.value.any{ it.isSelected})
+            RecipeScreenUiState(isAnyValueSelected = _recipesData.value.any{ it.isSelected})
         }
     }
 
@@ -96,7 +92,9 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
                 }
                 _recipesData.update {
                     clearRecipesUpdated
-
+                }
+                _uiState.update {
+                    RecipeScreenUiState(isAnyValueSelected = false)
                 }
 
             } catch(err: Exception){

@@ -101,8 +101,8 @@ fun ActionsBar(
 ) {
     Card(
         shape = RectangleShape, // The TextFiled has rounded corners top left and right by default
-        modifier = Modifier.height(56.dp)
-    ) {
+        modifier = Modifier.height(56.dp).fillMaxWidth(),
+        ) {
         Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
             if (recipesData.any { it.isSelected }) {
                 IconButton(onClick = { onClearSelectedItens() }) {

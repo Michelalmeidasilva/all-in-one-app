@@ -27,39 +27,36 @@ fun RecipeCard(
     isSelectedValues: Boolean,
     onRecipeDetailsClick: (Int) -> Unit
 ) {
+    ElevatedCard(
+        colors = CardDefaults.cardColors(
+            containerColor = if (recipeData.isSelected) Color.Gray else MaterialTheme.colorScheme.background,
+        ),
+        modifier = Modifier
+            .padding(4.dp)
+            .fillMaxWidth()
+            .height(75.dp)
+            .combinedClickable(onClick = {
+                if (isSelectedValues) {
+                    onPressCheckBox()
+                } else {
+                    onRecipeDetailsClick(recipeData.value.id)
+                }
+            }, onLongClick = {
+                onPressCheckBox();
+            })
 
-    Row() {
-        ElevatedCard(
-            colors = CardDefaults.cardColors(
-                containerColor = if (recipeData.isSelected) Color.Gray else MaterialTheme.colorScheme.background,
-            ),
-            modifier = Modifier
-                .padding(4.dp)
-                .fillMaxWidth()
-                .height(75.dp)
-                .combinedClickable(onClick = {
-                    if (isSelectedValues) {
-                        onPressCheckBox()
-                    } else {
-                        onRecipeDetailsClick(recipeData.value.id)
-                    }
-                }, onLongClick = {
-                    onPressCheckBox();
-                })
+    ) {
+
+        Row(
+            modifier = Modifier.padding(all = 4.dp)
 
         ) {
-
-            Row(
-                modifier = Modifier.padding(all = 4.dp)
-
-            ) {
-                Column(modifier = Modifier.padding(all = 4.dp)) {
-                    Text(
-                        text = recipeData.value.title, color = MaterialTheme.colorScheme.primary
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    recipeData.value.subtitle?.let { Text(text = it) }
-                }
+            Column(modifier = Modifier.padding(all = 4.dp)) {
+                Text(
+                    text = recipeData.value.title, color = MaterialTheme.colorScheme.primary
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                recipeData.value.subtitle?.let { Text(text = it) }
             }
         }
     }

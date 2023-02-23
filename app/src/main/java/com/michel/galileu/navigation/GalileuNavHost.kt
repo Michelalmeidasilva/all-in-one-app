@@ -44,8 +44,7 @@ fun GalileuNavHost(
                 navController.navigateToDetailsScreen(typeArg)
             }, onAddRecipeClick = {
                 navController.navigate(RecipeAddNavigation.route)
-            }
-            )
+            })
         }
 
         composable(route = SettingsNavigation.route) {
@@ -91,7 +90,7 @@ fun NavHostController.navigateSingleTopTo(route: String) = this.navigate(route) 
 }
 
 private fun NavHostController.navigateToDetailsScreen(accountType: Any) {
-    this.navigateSingleTopTo("${RecipeDetailsNavigation.route}/$accountType")
+    this.navigate("${RecipeDetailsNavigation.route}/$accountType")
 }
 
 private fun NavHostController.navigateToRecipeScreen() {
