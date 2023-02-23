@@ -1,6 +1,10 @@
 package com.michel.galileu.ui.viewmodel
 
 import android.app.Application
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.michel.galileu.data.repository.RecipeRepository
@@ -21,7 +25,31 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     private val repository: RecipeRepository = RecipeRepository(application)
 
     private val _recipesData = MutableStateFlow<List<ItemList>>(emptyList())
-    val recipesData= _recipesData.asStateFlow();
+
+    val query = MutableStateFlow(TextFieldValue(""))
+
+    val filteredRecipes = query
+        .debounce(200) // low debounce because we are just filtering local data
+        .distinctUntilChanged()
+        .combine(_recipesData) { queryText, list ->
+            val criteria = queryText.text.lowercase()
+            if (criteria.isEmpty()) {
+                return@combine _recipesData.value
+            } else {
+                list.filter { recipe ->
+                    recipe.value.title.lowercase().let {
+                        it.contains(criteria)
+                    }
+                }
+            }
+        }
+
+
+
+
+
+
+
 
     init {
         try {
@@ -37,7 +65,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
 
     fun removeAllSelectedRecipes(){
         try {
-            val recipesFiltered = recipesData.value?.filter{ it.isSelected};
+            val recipesFiltered = _recipesData.value?.filter{ it.isSelected};
 
             viewModelScope.launch{
                 repository.removeRecipe(recipesFiltered.map { item -> item.value })
@@ -100,6 +128,13 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
             } catch(err: Exception){
                 println(err.stackTrace)
             }
+        }
+
+    }
+
+    fun onChangeQuery(value: String) {
+        query.update {
+            TextFieldValue(value)
         }
 
     }

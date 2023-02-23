@@ -8,11 +8,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.flow.MutableStateFlow
 
 
 @ExperimentalFoundationApi
@@ -24,15 +22,15 @@ fun RecipeList(
     recipesData: List<ItemList>,
     onRecipeDetailsClick: (Int) -> Unit,
     isSelectedValues: Boolean,
+    onChangeSearchText: (text: String) -> Unit,
+    searchTextValue: String
 ) {
-    val searchTextValue = remember { mutableStateOf(TextFieldValue("")) }
-
 
     Box(modifier = Modifier.fillMaxSize()) {
         TopBar(recipesData, onDeleteItens = {
             onDeleteItens()
-        },  onClearSelectedItens, isEmptySelect = isSelectedValues, searchInput = SearchInput(text = searchTextValue.value, onClearText = { searchTextValue.value = TextFieldValue("")}, onChangeText = {
-            searchTextValue.value = it
+        },  onClearSelectedItens, isEmptySelect = isSelectedValues, searchInput = SearchInput(text = searchTextValue, onClearText = { onChangeSearchText("")}, onChangeText = {
+            onChangeSearchText(it)
         })  )
         LazyColumn(
             modifier = Modifier

@@ -26,7 +26,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 
 
-class SearchInput ( val text: TextFieldValue, val onChangeText: (value: TextFieldValue) -> Unit,
+class SearchInput ( val text: String, val onChangeText: (value: String) -> Unit,
     val onClearText: () -> Unit
     )
 
@@ -72,7 +72,7 @@ fun SearchBar(searchInput: SearchInput) {
             disabledIndicatorColor = Color.Transparent
         ),
         trailingIcon = {
-            if (searchInput.text != TextFieldValue("")) {
+            if (searchInput.text != "") {
                 IconButton(onClick = {
                     searchInput.onClearText()
                 }) {

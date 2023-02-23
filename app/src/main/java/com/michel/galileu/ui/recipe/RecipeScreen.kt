@@ -25,8 +25,9 @@ fun RecipeScreen(
     onRecipeDetailsClick: (Int) -> Unit = {},
     recipeViewModel:  RecipeViewModel = viewModel(),
     ) {
-    val recipesData = recipeViewModel.recipesData.collectAsState().value;
+    val recipesData = recipeViewModel.filteredRecipes.collectAsState(emptyList()).value;
     val uiState = recipeViewModel.uiState.collectAsState().value;
+    val searchText = recipeViewModel.query.collectAsState();
 
     Box(modifier = Modifier.fillMaxSize()) {
             RecipeList(
@@ -41,9 +42,17 @@ fun RecipeScreen(
                 onClearSelectedItens = {
                     recipeViewModel.clearSelectedRecipes();
                 },
+
                 recipesData,
                 onRecipeDetailsClick = onRecipeDetailsClick,
-                isSelectedValues = uiState.isAnyValueSelected
+                isSelectedValues = uiState.isAnyValueSelected,
+                onChangeSearchText = { value ->
+                    recipeViewModel.onChangeQuery(value)
+                },
+                searchTextValue =
+                    searchText.value.text
+
+
             )
 
 
