@@ -57,14 +57,14 @@ object RecipesNavigation : NavigationSettings {
 
 object RecipeSchedule : NavigationSettings {
     override val route = "recipeSchedule"
-    override val name = "Cronograma"
+    override val name = "Agenda"
     override val icon: ImageVector = Icons.Rounded.AccountBox;
 }
 
 object SettingsNavigation : NavigationSettings {
     override val route = "settings"
     override val icon: ImageVector = Icons.Rounded.Settings;
-    override val name = "Preferências"
+    override val name = "Config"
 }
 
 object RecipeAddNavigation : NavigationSettings {

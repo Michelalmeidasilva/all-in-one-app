@@ -34,7 +34,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.michel.galileu.data.entities.ItemForm
 import com.michel.galileu.data.entities.RecipeEntity
 import com.michel.galileu.ui.viewmodel.RecipeAddViewModel
-import com.michel.galileu.utils.IOManager
 import com.michel.galileu.utils.changeListType
 import kotlinx.coroutines.*
 import org.burnoutcrew.reorderable.*
@@ -172,10 +171,7 @@ fun RecipeAddScreen(
 ) {
     val ingredients = remember { mutableStateListOf<ItemForm>() }
     val instructionsItems = remember { mutableStateListOf<ItemForm>() }
-    val manager = IOManager()
-    val bitmap = remember {
-        mutableStateOf<Bitmap?>(null)
-    }
+    val bitmap = remember{ mutableStateOf<Bitmap?>(null) }
 
     val scrollState = rememberScrollState()
     var title by rememberSaveable { mutableStateOf("") }
@@ -188,21 +184,18 @@ fun RecipeAddScreen(
             loading = true;
             val fileName = if (bitmap.value !== null) "$title.jpeg"; else ""
 
-            GlobalScope.launch() {
-                recipeAddViewModel.addRecipe(
-                    recipeEntity = RecipeEntity(
-                        subtitle = subtitle,
-                        title = title,
-                        instructions = instructionsItems.map { it -> it.value },
-                        ingredients = ingredients.map { it -> it.value },
-                        imagePath = fileName,
-                    ), onComplete = { onSuccessfullyCreateRecipe() }
+            recipeAddViewModel.addRecipe(
+                recipeEntity = RecipeEntity(
+                    subtitle = subtitle,
+                    title = title,
+                    instructions = instructionsItems.map { it -> it.value },
+                    ingredients = ingredients.map { it -> it.value },
+                    imagePath = fileName,
+                ), onComplete = { onSuccessfullyCreateRecipe() }
+            )
 
-                )
-                manager.uploadImage(
-                    application = application, fileName = fileName, bitmap = bitmap
-                )
-            }
+            recipeAddViewModel.uploadImage(application, fileName, bitmap)
+
         } catch (_: Exception) {
         } finally {
             loading = false

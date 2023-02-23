@@ -1,9 +1,6 @@
 package com.michel.galileu.data.daos
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.michel.galileu.data.entities.RecipeEntity
 
 @Dao
@@ -19,6 +16,9 @@ interface RecipeDao {
 
     @Insert
     suspend fun insertAll(vararg recipes: RecipeEntity)
+
+    @Update
+    suspend fun update(recipe: RecipeEntity)
 
     @Delete
     suspend fun delete(recipe: RecipeEntity)
