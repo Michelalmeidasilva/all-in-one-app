@@ -8,9 +8,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.michel.galileu.ui.recipe.RecipeMenuScreen
-import com.michel.galileu.ui.screens.grocery.GroceryListItemDetailsScreen
-import com.michel.galileu.ui.screens.grocery.GroceryListScreen
+import com.michel.galileu.ui.screens.grocery.GroceriesListsScreen
+import com.michel.galileu.ui.screens.grocery.GroceryListDetailsScreen
+import com.michel.galileu.ui.screens.grocery.GroceryListRegisterScreen
 import com.michel.galileu.ui.screens.home.HomeScreen
+import com.michel.galileu.ui.screens.product.ProductDetailsScreen
+import com.michel.galileu.ui.screens.product.ProductRegisterScreen
 import com.michel.galileu.ui.screens.recipe.RecipeAddScreen
 import com.michel.galileu.ui.screens.recipe.RecipeDetailsScreen
 import com.michel.galileu.ui.screens.recipe.RecipeScreen
@@ -77,22 +80,43 @@ fun GalileuNavHost(
             SettingsScreen()
         }
 
-        composable(route = GroceryList.route) {
-            GroceryListScreen(onClickGroceryList = { typeArg ->
+        composable(route = Groceries.route) {
+            GroceriesListsScreen(onClickGroceryList = { typeArg ->
                 navController.navigateToGroceryListDetailsScreen(typeArg)
             })
         }
 
         composable(
-            route = GroceryDetailsNavigation.routeWithArgs,
-            arguments = GroceryDetailsNavigation.arguments,
-            deepLinks = GroceryDetailsNavigation.deepLinks
+            route = GroceryListDetailsNavigation.routeWithArgs,
+            arguments = GroceryListDetailsNavigation.arguments,
+            deepLinks = GroceryListDetailsNavigation.deepLinks
         ) { navBackStackEntry ->
             val recypeType =
-                navBackStackEntry.arguments?.getString(GroceryDetailsNavigation.typeArg)
+                navBackStackEntry.arguments?.getString(GroceryListDetailsNavigation.typeArg)
 
-            GroceryListItemDetailsScreen(recypeType!!, modifier, application)
+            GroceryListDetailsScreen(recypeType!!, modifier, application)
         }
+
+        composable(route = GroceryListDetails.route) {
+            GroceryListRegisterScreen()
+        }
+
+        composable(route = ProductRegister.route) {
+            ProductRegisterScreen(modifier, application)
+        }
+
+        composable(
+            route = ProductDetails.routeWithArgs,
+            arguments = ProductDetails.arguments,
+            deepLinks = ProductDetails.deepLinks
+        ) { navBackStackEntry ->
+            val recypeType =
+                Integer.parseInt(navBackStackEntry.arguments?.getString(GroceryListDetailsNavigation.typeArg))
+
+            ProductDetailsScreen(1, modifier, application)
+        }
+
+
     }
 }
 
@@ -117,7 +141,7 @@ private fun NavHostController.navigateToRecipeDetailsScreen(accountType: Any) {
 }
 
 private fun NavHostController.navigateToGroceryListDetailsScreen(accountType: Any) {
-    this.navigate("${GroceryDetailsNavigation.route}/$accountType")
+    this.navigate("${GroceryListDetailsNavigation.route}/$accountType")
 }
 
 

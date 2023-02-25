@@ -75,7 +75,6 @@ object RecipeDetailsNavigation : NavigationSettings {
     )
 }
 
-
 object RecipeMenu : NavigationSettings {
     override val route = "recipe-menu"
     override val name = "Cardápio"
@@ -88,19 +87,61 @@ object SettingsNavigation : NavigationSettings {
     override val name = "Configuração"
 }
 
-
-object GroceryList : NavigationSettings {
-    override val route = "grocery-list"
+object Groceries : NavigationSettings {
+    override val route = "groceries"
     override val name = "Compras"
     override val icon: ImageVector = Icons.Rounded.ShoppingCart;
 }
 
+object GroceryListDetails : NavigationSettings {
+    override val route = "grocery-list-details"
+    override val name = "Detalhes da lista de compras."
+    override val icon: ImageVector = Icons.Rounded.ShoppingCart;
 
-object GroceryDetailsNavigation : NavigationSettings {
+    const val typeArg = "grocerylist_details_type"
+
+    val arguments = listOf(
+        navArgument(typeArg) { type = NavType.StringType }
+    )
+    val deepLinks = listOf(
+        navDeepLink { uriPattern = "galileu://${route}/{$typeArg}" }
+    )
+
+}
+
+object GroceryListRegister : NavigationSettings {
+    override val route = "grocery-list-register"
+    override val name = "Cadastro de lista de Compras"
+    override val icon: ImageVector = Icons.Rounded.ShoppingCart;
+}
+
+object ProductDetails : NavigationSettings {
+    override val route = "product-detail"
+    override val name = "Product Details"
+    override val icon: ImageVector = Icons.Rounded.ShoppingCart;
+
+    const val typeArg = "product_details_type"
+
+    val routeWithArgs = "${route}/{$typeArg}"
+    val arguments = listOf(
+        navArgument(typeArg) { type = NavType.StringType }
+    )
+    val deepLinks = listOf(
+        navDeepLink { uriPattern = "galileu://${route}/{$typeArg}" }
+    )
+
+}
+
+object ProductRegister : NavigationSettings {
+    override val route = "product-register"
+    override val name = "Product Register"
+    override val icon: ImageVector = Icons.Rounded.ShoppingCart;
+}
+
+object GroceryListDetailsNavigation : NavigationSettings {
     override val route = "grocery-details"
     override val name = "Grocery Details"
     override val icon: ImageVector = Icons.Rounded.Home;
-
 
     const val typeArg = "grocery_details_type"
 
@@ -113,6 +154,5 @@ object GroceryDetailsNavigation : NavigationSettings {
     )
 }
 
-
-val bottomNavItems = listOf(RecipesNavigation, GroceryList, RecipeMenu, SettingsNavigation)
+val bottomNavItems = listOf(RecipesNavigation, Groceries, RecipeMenu, SettingsNavigation)
 
