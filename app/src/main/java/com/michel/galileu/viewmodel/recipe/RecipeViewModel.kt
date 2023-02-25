@@ -1,14 +1,11 @@
-package com.michel.galileu.ui.viewmodel
+package com.michel.galileu.viewmodel.recipe
 
 import android.app.Application
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.michel.galileu.data.repository.RecipeRepository
-import com.michel.galileu.ui.recipe.ItemList
+import com.michel.galileu.ui.screens.recipe.ItemList
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 

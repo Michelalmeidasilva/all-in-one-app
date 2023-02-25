@@ -1,4 +1,4 @@
-package com.michel.galileu.ui.screens
+package com.michel.galileu.ui.screens.home
 
 import GalileuNavBar
 import android.annotation.SuppressLint

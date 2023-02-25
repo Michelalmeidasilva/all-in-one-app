@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.michel.galileu.navigation
+package com.michel.galileu.utils.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
@@ -63,8 +63,6 @@ object RecipeMenu : NavigationSettings {
     override val name = "Cardápio"
     override val icon: ImageVector = Icons.Rounded.Info;
 }
-
-
 
 object SettingsNavigation : NavigationSettings {
     override val route = "settings"

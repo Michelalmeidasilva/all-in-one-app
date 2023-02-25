@@ -1,4 +1,4 @@
-package com.michel.galileu.ui.recipe
+package com.michel.galileu.ui.screens.recipe
 
 import android.annotation.SuppressLint
 
@@ -13,7 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.michel.galileu.data.entities.RecipeEntity
-import com.michel.galileu.ui.viewmodel.RecipeViewModel
+import com.michel.galileu.ui.components.recipe.RecipeList
+import com.michel.galileu.viewmodel.recipe.RecipeViewModel
 
 data class ItemList(val value: RecipeEntity, var isSelected: Boolean)
 
@@ -23,7 +24,7 @@ data class ItemList(val value: RecipeEntity, var isSelected: Boolean)
 fun RecipeScreen(
     onAddRecipeClick: () -> Unit,
     onRecipeDetailsClick: (Int) -> Unit = {},
-    recipeViewModel:  RecipeViewModel = viewModel(),
+    recipeViewModel: RecipeViewModel = viewModel(),
     ) {
     val recipesData = recipeViewModel.filteredRecipes.collectAsState(emptyList()).value;
     val uiState = recipeViewModel.uiState.collectAsState().value;

@@ -1,4 +1,4 @@
-package com.michel.galileu.ui.recipe
+package com.michel.galileu.ui.components.recipe
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,8 +22,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import com.michel.galileu.ui.screens.recipe.ItemList
 
 
 class SearchInput ( val text: String, val onChangeText: (value: String) -> Unit,

@@ -1,4 +1,4 @@
-package com.michel.galileu.ui.recipe
+package com.michel.galileu.ui.components.recipe
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
@@ -10,7 +10,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.michel.galileu.ui.screens.recipe.ItemList
 
 
 @ExperimentalFoundationApi

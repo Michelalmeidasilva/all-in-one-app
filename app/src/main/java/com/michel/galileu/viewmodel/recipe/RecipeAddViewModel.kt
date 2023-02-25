@@ -1,4 +1,4 @@
-package com.michel.galileu.ui.viewmodel
+package com.michel.galileu.viewmodel.recipe
 
 import android.app.Application
 import android.graphics.Bitmap
@@ -9,7 +9,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.michel.galileu.data.entities.RecipeEntity
 import com.michel.galileu.data.repository.RecipeRepository
-import com.michel.galileu.ui.recipe.ItemList
+import com.michel.galileu.ui.screens.recipe.ItemList
 import com.michel.galileu.utils.IOManager
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope

@@ -1,4 +1,4 @@
-package com.michel.galileu.ui.theme
+package com.michel.galileu.ui.components.theme
 
 import android.app.Activity
 import android.os.Build

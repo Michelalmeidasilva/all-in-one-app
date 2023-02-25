@@ -1,4 +1,4 @@
-package com.michel.galileu.navigation
+package com.michel.galileu.utils.navigation
 
 import android.app.Application
 import androidx.compose.runtime.Composable
@@ -7,8 +7,13 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.michel.galileu.ui.screens.*
-import com.michel.galileu.ui.recipe.RecipeScreen
+import com.michel.galileu.ui.screens.home.HomeScreen
+import com.michel.galileu.ui.screens.recipe.RecipeAddScreen
+import com.michel.galileu.ui.screens.recipe.RecipeDetailsScreen
+import com.michel.galileu.ui.recipe.RecipeMenuScreen
+import com.michel.galileu.ui.screens.recipe.RecipeScheduleScreen
+import com.michel.galileu.ui.screens.recipe.RecipeScreen
+import com.michel.galileu.ui.screens.settings.SettingsScreen
 
 /*
  * Copyright 2022 The Android Open Source Project

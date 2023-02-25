@@ -1,6 +1,5 @@
-package com.michel.galileu.ui.screens
+package com.michel.galileu.ui.recipe
 
-import android.annotation.SuppressLint
 import android.app.Application
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -8,16 +7,20 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.michel.galileu.viewmodel.recipe.RecipeMenuViewModel
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 
-
-@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
-fun RecipeScheduleScreen(
-    modifier: Modifier = Modifier,
+fun RecipeMenuScreen(modifier: Modifier = Modifier,
     application: Application,
-
-    ) {
+    recipeMenuViewModel: RecipeMenuViewModel = viewModel()
+) {
     val scrollState = rememberScrollState()
+//    val menus = recipeMenuViewModel.
+
+
 
     Box(modifier = modifier.fillMaxSize()) {
         Column(modifier = Modifier.verticalScroll(scrollState)) {

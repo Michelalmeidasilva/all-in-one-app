@@ -1,4 +1,4 @@
-package com.michel.galileu.ui.recipe
+package com.michel.galileu.ui.components.recipe
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.michel.galileu.ui.screens.recipe.ItemList
 
 @ExperimentalFoundationApi
 @SuppressLint("UnrememberedMutableState")

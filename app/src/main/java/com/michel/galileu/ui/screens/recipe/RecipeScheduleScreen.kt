@@ -1,4 +1,4 @@
-package com.michel.galileu.ui.screens
+package com.michel.galileu.ui.screens.recipe
 
 import android.annotation.SuppressLint
 import android.app.Application
@@ -12,8 +12,10 @@ import androidx.compose.ui.unit.dp
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
-fun RecipeMenuScreen(modifier: Modifier = Modifier,
+fun RecipeScheduleScreen(
+    modifier: Modifier = Modifier,
     application: Application,
+
     ) {
     val scrollState = rememberScrollState()
 

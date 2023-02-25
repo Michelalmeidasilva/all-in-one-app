@@ -1,4 +1,4 @@
-package com.michel.galileu.ui.screens
+package com.michel.galileu.ui.screens.recipe
 
 import CustomOutlinedTextField
 import android.app.Application
@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.michel.galileu.data.entities.ItemForm
 import com.michel.galileu.data.entities.RecipeEntity
-import com.michel.galileu.ui.viewmodel.RecipeAddViewModel
+import com.michel.galileu.viewmodel.recipe.RecipeAddViewModel
 import com.michel.galileu.utils.changeListType
 import kotlinx.coroutines.*
 import org.burnoutcrew.reorderable.*

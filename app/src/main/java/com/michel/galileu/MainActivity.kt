@@ -15,10 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.michel.galileu.navigation.GalileuNavHost
-import com.michel.galileu.navigation.RecipesNavigation
-import com.michel.galileu.navigation.bottomNavItems
-import com.michel.galileu.ui.theme.GalileuTheme
+import com.michel.galileu.utils.navigation.GalileuNavHost
+import com.michel.galileu.utils.navigation.RecipesNavigation
+import com.michel.galileu.utils.navigation.bottomNavItems
+import com.michel.galileu.ui.components.theme.GalileuTheme
 
 
 class MainActivity : ComponentActivity() {

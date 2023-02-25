@@ -1,15 +1,10 @@
-package com.michel.galileu.ui.screens
+package com.michel.galileu.ui.screens.recipe
 
 import android.annotation.SuppressLint
 import android.app.Application
 import androidx.compose.foundation.*
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,8 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.michel.galileu.data.entities.RecipeEntity
-import com.michel.galileu.ui.viewmodel.RecipeDetailsViewModel
+import com.michel.galileu.viewmodel.recipe.RecipeDetailsViewModel
 
 import com.michel.galileu.utils.IOManager
 import com.michel.galileu.utils.changeListType
