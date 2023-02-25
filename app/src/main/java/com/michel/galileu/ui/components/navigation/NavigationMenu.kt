@@ -13,14 +13,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.michel.galileu.utils.navigation.bottomNavItems
+import com.michel.galileu.navigation.bottomNavItems
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun GalileuNavBar(onClickNavBar: (value: String) -> Unit) {
     Box(modifier = Modifier.fillMaxSize()) {
         LazyVerticalGrid(
-            modifier = Modifier.padding(30.dp).align(Alignment.Center),
+            modifier = Modifier
+                .padding(30.dp)
+                .align(Alignment.Center),
             columns = GridCells.Adaptive(110.dp),
             contentPadding = PaddingValues(
                 4.dp
@@ -31,13 +34,20 @@ fun GalileuNavBar(onClickNavBar: (value: String) -> Unit) {
 
                     Card(
                         modifier = Modifier
-                          .padding(start= 10.dp, top = 10.dp).height(90.dp).align(Alignment.Center),
+                            .padding(start = 10.dp, top = 10.dp)
+                            .height(90.dp)
+                            .align(Alignment.Center),
                         onClick = { onClickNavBar(it.route) }
                     ) {
-                        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxHeight().fillMaxWidth()){
-                            Column(modifier=Modifier.width(110.dp)) {
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .fillMaxWidth()
+                        ) {
+                            Column(modifier = Modifier.width(110.dp)) {
 
-                                Box(modifier= Modifier.align(Alignment.CenterHorizontally)   ){
+                                Box(modifier = Modifier.align(Alignment.CenterHorizontally)) {
                                     it.icon?.let { it1 ->
                                         Icon(
                                             imageVector = it1,
@@ -49,10 +59,12 @@ fun GalileuNavBar(onClickNavBar: (value: String) -> Unit) {
                                 }
 
                                 Text(
-                                    modifier = Modifier.padding(top=8.dp,).align(Alignment.CenterHorizontally),
+                                    modifier = Modifier
+                                        .padding(top = 8.dp)
+                                        .align(Alignment.CenterHorizontally),
                                     text = it.name,
                                     fontWeight = FontWeight.SemiBold,
-                                    style = TextStyle(color = Color.Gray, fontSize= 16.sp)
+                                    style = TextStyle(color = Color.Gray, fontSize = 16.sp)
                                 )
                             }
                         }

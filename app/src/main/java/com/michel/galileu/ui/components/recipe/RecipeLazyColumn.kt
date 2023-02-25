@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.michel.galileu.ui.components.textfield.SearchActions
 import com.michel.galileu.ui.screens.recipe.ItemList
 
 
@@ -27,11 +28,20 @@ fun RecipeList(
 ) {
 
     Box(modifier = Modifier.fillMaxSize()) {
-        TopBar(recipesData, onDeleteItens = {
-            onDeleteItens()
-        },  onClearSelectedItens, isEmptySelect = isSelectedValues, searchInput = SearchInput(text = searchTextValue, onClearText = { onChangeSearchText("")}, onChangeText = {
-            onChangeSearchText(it)
-        })  )
+        RecipeTopBar(
+            recipesData,
+            onDeleteItens = {
+                onDeleteItens()
+            },
+            onClearSelectedItens,
+            isEmptySelect = isSelectedValues,
+            searchActions = SearchActions(
+                text = searchTextValue,
+                onClearText = { onChangeSearchText("") },
+                onChangeText = {
+                    onChangeSearchText(it)
+                })
+        )
         LazyColumn(
             modifier = Modifier
                 .absoluteOffset(y = 60.dp)

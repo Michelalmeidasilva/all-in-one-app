@@ -21,18 +21,18 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.michel.galileu.data.entities.ItemForm
 import com.michel.galileu.data.entities.RecipeEntity
-import com.michel.galileu.viewmodel.recipe.RecipeAddViewModel
+import com.michel.galileu.ui.viewmodel.recipe.RecipeAddViewModel
 import com.michel.galileu.utils.changeListType
 import kotlinx.coroutines.*
 import org.burnoutcrew.reorderable.*
@@ -166,7 +166,7 @@ fun RecipeAddScreen(
 ) {
     val ingredients = remember { mutableStateListOf<ItemForm>() }
     val instructionsItems = remember { mutableStateListOf<ItemForm>() }
-    val bitmap = remember{ mutableStateOf<Bitmap?>(null) }
+    val bitmap = remember { mutableStateOf<Bitmap?>(null) }
 
     val scrollState = rememberScrollState()
     var title by rememberSaveable { mutableStateOf("") }
@@ -189,7 +189,6 @@ fun RecipeAddScreen(
             )
 
             recipeAddViewModel.uploadImage(application, fileName, bitmap)
-
         } catch (_: Exception) {
         } finally {
             loading = false
@@ -211,7 +210,7 @@ fun RecipeAddScreen(
                 style = MaterialTheme.typography.titleLarge
             )
 
-            Column(modifier=Modifier.padding(top = 12.dp)) {
+            Column(modifier = Modifier.padding(top = 12.dp)) {
                 CustomOutlinedTextField(
                     value = title,
                     label = { Text(text = "Titulo") },
@@ -232,7 +231,11 @@ fun RecipeAddScreen(
 
             RequestContentPermission(application, bitmap)
 
-            Text("Ingredientes:", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 10.dp, bottom = 4.dp))
+            Text(
+                "Ingredientes:",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(top = 10.dp, bottom = 4.dp)
+            )
 
             RegisterItems(itemsList = ingredients, ListType.ORDERED_LIST)
 
@@ -244,20 +247,14 @@ fun RecipeAddScreen(
 
             RegisterItems(itemsList = instructionsItems, ListType.NUMBERED_LIST)
 
-
             Button(
                 onClick = { onRegisterRecipe() },
                 modifier = Modifier
-                    .padding(all = 4.dp)
                     .align(alignment = Alignment.CenterHorizontally)
-
+                    .fillMaxWidth(1f)
             ) {
                 Text("Cadastrar")
-
             }
         }
-
-
     }
-
 }

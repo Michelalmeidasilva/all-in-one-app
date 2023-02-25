@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.michel.galileu.viewmodel.recipe.RecipeDetailsViewModel
+import com.michel.galileu.ui.viewmodel.recipe.RecipeDetailsViewModel
 
 import com.michel.galileu.utils.IOManager
 import com.michel.galileu.utils.changeListType

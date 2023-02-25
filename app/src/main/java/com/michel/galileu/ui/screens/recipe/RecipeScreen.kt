@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.michel.galileu.data.entities.RecipeEntity
 import com.michel.galileu.ui.components.recipe.RecipeList
-import com.michel.galileu.viewmodel.recipe.RecipeViewModel
+import com.michel.galileu.ui.viewmodel.recipe.RecipeViewModel
 
 data class ItemList(val value: RecipeEntity, var isSelected: Boolean)
 
@@ -25,36 +25,36 @@ fun RecipeScreen(
     onAddRecipeClick: () -> Unit,
     onRecipeDetailsClick: (Int) -> Unit = {},
     recipeViewModel: RecipeViewModel = viewModel(),
-    ) {
+) {
     val recipesData = recipeViewModel.filteredRecipes.collectAsState(emptyList()).value;
     val uiState = recipeViewModel.uiState.collectAsState().value;
     val searchText = recipeViewModel.query.collectAsState();
 
     Box(modifier = Modifier.fillMaxSize()) {
-            RecipeList(
-                onDeleteItens = {
-                    recipeViewModel.removeAllSelectedRecipes()
-                },
-                onUpdateRecipeList = { it, index ->
-                    recipeViewModel.updateSelectedRecipe(it, index);
+        RecipeList(
+            onDeleteItens = {
+                recipeViewModel.removeAllSelectedRecipes()
+            },
+            onUpdateRecipeList = { it, index ->
+                recipeViewModel.updateSelectedRecipe(it, index);
 
-                    println(recipeViewModel.uiState.value!!.isAnyValueSelected)
-                },
-                onClearSelectedItens = {
-                    recipeViewModel.clearSelectedRecipes();
-                },
+                println(recipeViewModel.uiState.value!!.isAnyValueSelected)
+            },
+            onClearSelectedItens = {
+                recipeViewModel.clearSelectedRecipes();
+            },
 
-                recipesData,
-                onRecipeDetailsClick = onRecipeDetailsClick,
-                isSelectedValues = uiState.isAnyValueSelected,
-                onChangeSearchText = { value ->
-                    recipeViewModel.onChangeQuery(value)
-                },
-                searchTextValue =
-                    searchText.value.text
+            recipesData,
+            onRecipeDetailsClick = onRecipeDetailsClick,
+            isSelectedValues = uiState.isAnyValueSelected,
+            onChangeSearchText = { value ->
+                recipeViewModel.onChangeQuery(value)
+            },
+            searchTextValue =
+            searchText.value.text
 
 
-            )
+        )
 
 
         FloatingActionButton(
