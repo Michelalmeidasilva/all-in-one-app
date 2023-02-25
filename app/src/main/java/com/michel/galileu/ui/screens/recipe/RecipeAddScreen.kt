@@ -189,7 +189,6 @@ fun RecipeAddScreen(
             )
 
             recipeAddViewModel.uploadImage(application, fileName, bitmap)
-
         } catch (_: Exception) {
         } finally {
             loading = false
@@ -248,20 +247,14 @@ fun RecipeAddScreen(
 
             RegisterItems(itemsList = instructionsItems, ListType.NUMBERED_LIST)
 
-
             Button(
                 onClick = { onRegisterRecipe() },
                 modifier = Modifier
-                    .padding(all = 4.dp)
                     .align(alignment = Alignment.CenterHorizontally)
-
+                    .fillMaxWidth(1f)
             ) {
                 Text("Cadastrar")
-
             }
         }
-
-
     }
-
 }

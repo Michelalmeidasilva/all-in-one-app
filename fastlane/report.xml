@@ -5,97 +5,54 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="00: default_platform" time="0.000288">
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000293">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="01: Switch to android create_tag lane" time="0.001106">
+      <testcase classname="fastlane.lanes" name="1: Switch to android create_tag lane" time="0.000275">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="02: Switch to android get_version_code lane" time="0.000289">
+      <testcase classname="fastlane.lanes" name="2: Switch to android get_version_code lane" time="0.000209">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="03: google_play_track_version_codes" time="4.200258">
+      <testcase classname="fastlane.lanes" name="3: google_play_track_version_codes" time="4.261811">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="04: google_play_track_release_names" time="4.024584">
+      <testcase classname="fastlane.lanes" name="4: google_play_track_release_names" time="3.889267">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="05: add_git_tag" time="0.057902">
+      <testcase classname="fastlane.lanes" name="5: add_git_tag" time="0.06448">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="06: push_git_tags" time="2.073876">
+      <testcase classname="fastlane.lanes" name="6: push_git_tags" time="1.999571">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="07: Switch to android internal lane" time="0.000881">
+      <testcase classname="fastlane.lanes" name="7: Switch to android internal lane" time="0.000476">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="08: bundleRelease" time="54.224309">
+      <testcase classname="fastlane.lanes" name="8: bundleRelease" time="16.662313">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="09: upload_to_play_store" time="21.134066">
+      <testcase classname="fastlane.lanes" name="9: upload_to_play_store" time="21.206193">
         
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="10: increment_version_code" time="0.006388">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="11: Switch to android get_version_code lane" time="0.000398">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="12: google_play_track_version_codes" time="3.182256">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="13: google_play_track_release_names" time="3.834304">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="14: Switch to android commit_version lane" time="0.000654">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="15: cd .. &amp;&amp; git checkout -b release/android-1.0.4-build-9" time="0.061903">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="16: git_commit" time="0.085936">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="17: push_to_git_remote" time="2.001961">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="18: create_pull_request" time="0.293174">
+          <failure message="/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/actions/actions_helper.rb:67:in `execute_action&apos;&#10;/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/runner.rb:255:in `block in execute_action&apos;&#10;/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/runner.rb:229:in `chdir&apos;&#10;/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/runner.rb:229:in `execute_action&apos;&#10;/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/runner.rb:157:in `trigger_action_by_name&apos;&#10;/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/fast_file.rb:159:in `method_missing&apos;&#10;Fastfile:103:in `block (2 levels) in parsing_binding&apos;&#10;/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/lane.rb:33:in `call&apos;&#10;/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/runner.rb:204:in `try_switch_to_lane&apos;&#10;/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/runner.rb:146:in `trigger_action_by_name&apos;&#10;/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/fast_file.rb:159:in `method_missing&apos;&#10;Fastfile:53:in `block (2 levels) in parsing_binding&apos;&#10;/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/lane.rb:33:in `call&apos;&#10;/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/runner.rb:49:in `block in execute&apos;&#10;/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/runner.rb:45:in `chdir&apos;&#10;/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/runner.rb:45:in `execute&apos;&#10;/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/lane_manager.rb:47:in `cruise_lane&apos;&#10;/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/command_line_handler.rb:36:in `handle&apos;&#10;/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/commands_generator.rb:110:in `block (2 levels) in run&apos;&#10;/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/commander-4.6.0/lib/commander/command.rb:187:in `call&apos;&#10;/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/commander-4.6.0/lib/commander/command.rb:157:in `run&apos;&#10;/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/commander-4.6.0/lib/commander/runner.rb:444:in `run_active_command&apos;&#10;/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/fastlane-2.211.0/fastlane_core/lib/fastlane_core/ui/fastlane_runner.rb:124:in `run!&apos;&#10;/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/commander-4.6.0/lib/commander/delegates.rb:18:in `run!&apos;&#10;/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/commands_generator.rb:354:in `run&apos;&#10;/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/commands_generator.rb:43:in `start&apos;&#10;/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/fastlane-2.211.0/fastlane/lib/fastlane/cli_tools_distributor.rb:123:in `take_off&apos;&#10;/Users/user/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/fastlane-2.211.0/bin/fastlane:23:in `&lt;top (required)&gt;&apos;&#10;/Users/user/.rbenv/versions/3.0.1/bin/fastlane:23:in `load&apos;&#10;/Users/user/.rbenv/versions/3.0.1/bin/fastlane:23:in `&lt;main&gt;&apos;&#10;&#10;Google Api Error: Invalid request - APK specifies a version code that has already been used." />
         
       </testcase>
     
