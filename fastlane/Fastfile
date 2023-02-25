@@ -106,7 +106,6 @@ platform :android do
       skip_upload_apk: true
     )
 
-
     increment_version_code(
       gradle_file_path: "./app/build.gradle",
       version_code: Actions.lane_context[SharedValues::BUILD_NUMBER]
