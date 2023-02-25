@@ -1,20 +1,13 @@
-package com.michel.galileu.viewmodel.recipe
+package com.michel.galileu.ui.viewmodel.recipe
 
 import android.app.Application
 import android.graphics.Bitmap
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.michel.galileu.data.entities.RecipeEntity
 import com.michel.galileu.data.repository.RecipeRepository
-import com.michel.galileu.ui.screens.recipe.ItemList
 import com.michel.galileu.utils.IOManager
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class RecipeAddViewModel(application: Application) : AndroidViewModel(application) {
@@ -30,7 +23,11 @@ class RecipeAddViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    fun uploadImage(application: Application, fileName: String, bitmapState: MutableState<Bitmap?>){
+    fun uploadImage(
+        application: Application,
+        fileName: String,
+        bitmapState: MutableState<Bitmap?>
+    ) {
         viewModelScope.launch {
             val manager = IOManager()
 
