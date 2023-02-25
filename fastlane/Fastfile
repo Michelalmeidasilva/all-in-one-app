@@ -82,6 +82,7 @@ platform :android do
 
     git_commit(path: '.', message: "New android app release #{version}", skip_git_hooks: true)
     push_to_git_remote(local_branch: branch_name, remote_branch: branch_name)
+
     create_pull_request(
      repo: "Michelalmeidasilva/galileu",
      title: "New Release ${version}",
@@ -89,6 +90,8 @@ platform :android do
      base: "develop", # optional, defaults to "master"
      body: "Please pull this in!",       # optional
     )
+
+    sh "git checkout develop"
   end
 
 
@@ -105,7 +108,6 @@ platform :android do
       skip_upload_aab: false,
       skip_upload_apk: true
     )
-
 
     increment_version_code(
       gradle_file_path: "./app/build.gradle",

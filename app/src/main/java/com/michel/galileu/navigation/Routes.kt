@@ -14,10 +14,14 @@
  * limitations under the License.
  */
 
-package com.michel.galileu.utils.navigation
+package com.michel.galileu.navigation
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
+import androidx.compose.material.icons.rounded.AccountBox
+import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.Menu
+import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.ShoppingCart
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -34,7 +38,7 @@ interface NavigationSettings {
 }
 
 /**
- * Rally app navigation destinations
+ * Galileu app navigation destinations
  */
 object HomeNavigation : NavigationSettings {
     override val route = "home"
@@ -42,21 +46,35 @@ object HomeNavigation : NavigationSettings {
     override val icon: ImageVector = Icons.Rounded.Home;
 }
 
-
-/**
- * Rally app navigation destinations
- */
 object RecipesNavigation : NavigationSettings {
     override val route = "recipes"
     override val name = "Receitas"
     override val icon: ImageVector = Icons.Rounded.AccountBox;
 }
 
-object GroceryList : NavigationSettings {
-    override val route = "GroceryList"
-    override val name = "Compras"
-    override val icon: ImageVector = Icons.Rounded.ShoppingCart;
+object RecipeAddNavigation : NavigationSettings {
+    override val route = "recipe-add"
+    override val icon: ImageVector = Icons.Rounded.Settings;
+    override val name = "Adicionar Receita"
 }
+
+object RecipeDetailsNavigation : NavigationSettings {
+    override val route = "details"
+    override val name = "Receita"
+    override val icon: ImageVector? = null;
+
+    const val typeArg = "recipe_type"
+
+    val routeWithArgs = "$route/{$typeArg}"
+
+    val arguments = listOf(
+        navArgument(typeArg) { type = NavType.StringType }
+    )
+    val deepLinks = listOf(
+        navDeepLink { uriPattern = "galileu://$route/{$typeArg}" }
+    )
+}
+
 
 object RecipeMenu : NavigationSettings {
     override val route = "recipe-menu"
@@ -70,27 +88,28 @@ object SettingsNavigation : NavigationSettings {
     override val name = "Configuração"
 }
 
-object RecipeAddNavigation : NavigationSettings {
-    override val route = "recipe-add"
-    override val icon: ImageVector = Icons.Rounded.Settings;
-    override val name = "Adicionar Receita"
+
+object GroceryList : NavigationSettings {
+    override val route = "grocery-list"
+    override val name = "Compras"
+    override val icon: ImageVector = Icons.Rounded.ShoppingCart;
 }
 
-object RecipeDetailsNavigation : NavigationSettings {
-    // Added for simplicity, this icon will not in fact be used, as SingleAccount isn't
-    // part of the RallyTabRow selection
-    override val route = "details"
-    override val name = "Receita"
-    override val icon: ImageVector? = null;
 
-    const val typeArg = "recipe_type"
+object GroceryDetailsNavigation : NavigationSettings {
+    override val route = "grocery-details"
+    override val name = "Grocery Details"
+    override val icon: ImageVector = Icons.Rounded.Home;
 
-    val routeWithArgs = "$route/{$typeArg}"
+
+    const val typeArg = "grocery_details_type"
+
+    val routeWithArgs = "${route}/{$typeArg}"
     val arguments = listOf(
         navArgument(typeArg) { type = NavType.StringType }
     )
     val deepLinks = listOf(
-        navDeepLink { uriPattern = "rally://$route/{$typeArg}" }
+        navDeepLink { uriPattern = "galileu://${route}/{$typeArg}" }
     )
 }
 

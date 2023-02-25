@@ -1,4 +1,4 @@
-package com.michel.galileu.utils.navigation
+package com.michel.galileu.navigation
 
 import android.app.Application
 import androidx.compose.runtime.Composable
@@ -7,11 +7,12 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.michel.galileu.ui.recipe.RecipeMenuScreen
+import com.michel.galileu.ui.screens.grocery.GroceryListItemDetailsScreen
+import com.michel.galileu.ui.screens.grocery.GroceryListScreen
 import com.michel.galileu.ui.screens.home.HomeScreen
 import com.michel.galileu.ui.screens.recipe.RecipeAddScreen
 import com.michel.galileu.ui.screens.recipe.RecipeDetailsScreen
-import com.michel.galileu.ui.recipe.RecipeMenuScreen
-import com.michel.galileu.ui.screens.grocery.GroceryListScreen
 import com.michel.galileu.ui.screens.recipe.RecipeScreen
 import com.michel.galileu.ui.screens.settings.SettingsScreen
 
@@ -46,14 +47,10 @@ fun GalileuNavHost(
         }
         composable(route = RecipesNavigation.route) {
             RecipeScreen(onRecipeDetailsClick = { typeArg ->
-                navController.navigateToDetailsScreen(typeArg)
+                navController.navigateToRecipeDetailsScreen(typeArg)
             }, onAddRecipeClick = {
                 navController.navigate(RecipeAddNavigation.route)
             })
-        }
-
-        composable(route = SettingsNavigation.route) {
-            SettingsScreen()
         }
 
         composable(
@@ -72,14 +69,25 @@ fun GalileuNavHost(
             })
         }
 
-        composable(route = GroceryList.route) {
-            GroceryListScreen(modifier, application)
-        }
-
         composable(route = RecipeMenu.route) {
             RecipeMenuScreen(modifier, application)
         }
 
+        composable(route = SettingsNavigation.route) {
+            SettingsScreen()
+        }
+
+        composable(route = GroceryList.route) {
+            GroceryListScreen(onClickGroceryList = { typeArg ->
+                navController.navigateToRecipeDetailsScreen(typeArg)
+            })
+        }
+
+        composable(route = GroceryDetailsNavigation.route) { navBackStackEntry ->
+            val recypeType =
+                Integer.parseInt(navBackStackEntry.arguments?.getString(GroceryDetailsNavigation.typeArg))
+            GroceryListItemDetailsScreen(recypeType, modifier, application)
+        }
     }
 }
 
@@ -99,9 +107,14 @@ fun NavHostController.navigateSingleTopTo(route: String) = this.navigate(route) 
     restoreState = true
 }
 
-private fun NavHostController.navigateToDetailsScreen(accountType: Any) {
+private fun NavHostController.navigateToRecipeDetailsScreen(accountType: Any) {
     this.navigate("${RecipeDetailsNavigation.route}/$accountType")
 }
+
+private fun NavHostController.navigateToGroceryListDetailsScreen(accountType: Any) {
+    this.navigate("${GroceryDetailsNavigation.route}/$accountType")
+}
+
 
 private fun NavHostController.navigateToRecipeScreen() {
     this.navigate(RecipesNavigation.route)
