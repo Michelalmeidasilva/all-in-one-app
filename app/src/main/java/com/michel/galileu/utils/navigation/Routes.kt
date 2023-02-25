@@ -49,38 +49,38 @@ object HomeNavigation : NavigationSettings {
 object RecipesNavigation : NavigationSettings {
     override val route = "recipes"
     override val name = "Receitas"
-    override val icon: ImageVector = Icons.Rounded.Home;
+    override val icon: ImageVector = Icons.Rounded.AccountBox;
 }
 
-object RecipeSchedule : NavigationSettings {
-    override val route = "recipe-schedule"
-    override val name = "Agenda"
-    override val icon: ImageVector = Icons.Rounded.AccountBox;
+object GroceryList : NavigationSettings {
+    override val route = "GroceryList"
+    override val name = "Compras"
+    override val icon: ImageVector = Icons.Rounded.ShoppingCart;
 }
 
 object RecipeMenu : NavigationSettings {
     override val route = "recipe-menu"
     override val name = "Cardápio"
-    override val icon: ImageVector = Icons.Rounded.Info;
+    override val icon: ImageVector = Icons.Rounded.Menu;
 }
 
 object SettingsNavigation : NavigationSettings {
     override val route = "settings"
     override val icon: ImageVector = Icons.Rounded.Settings;
-    override val name = "menu"
+    override val name = "Configuração"
 }
 
 object RecipeAddNavigation : NavigationSettings {
     override val route = "recipe-add"
     override val icon: ImageVector = Icons.Rounded.Settings;
-    override val name = "Recipe"
+    override val name = "Adicionar Receita"
 }
 
 object RecipeDetailsNavigation : NavigationSettings {
     // Added for simplicity, this icon will not in fact be used, as SingleAccount isn't
     // part of the RallyTabRow selection
     override val route = "details"
-    override val name = "Details"
+    override val name = "Receita"
     override val icon: ImageVector? = null;
 
     const val typeArg = "recipe_type"
@@ -95,5 +95,5 @@ object RecipeDetailsNavigation : NavigationSettings {
 }
 
 
-val bottomNavItems = listOf(RecipesNavigation, RecipeSchedule, RecipeMenu, SettingsNavigation)
+val bottomNavItems = listOf(RecipesNavigation, GroceryList, RecipeMenu, SettingsNavigation)
 

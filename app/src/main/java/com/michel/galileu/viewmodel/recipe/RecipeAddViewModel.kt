@@ -18,8 +18,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class RecipeAddViewModel(application: Application) : AndroidViewModel(application) {
-    val bitmap= MutableStateFlow<Bitmap?>(null);
-
     private val mRepository: RecipeRepository =
         RecipeRepository(application)
 

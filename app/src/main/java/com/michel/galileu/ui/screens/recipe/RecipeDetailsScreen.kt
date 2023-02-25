@@ -23,7 +23,7 @@ import com.michel.galileu.utils.changeListType
 @Composable
 fun ListItems(items: List<String?>?, listType: ListType, title: String) {
     if (items?.isEmpty() == false) {
-        Text(title, style = MaterialTheme.typography.titleLarge)
+        Text(title, style = MaterialTheme.typography.titleMedium)
 
         items.mapIndexed { index, it ->
             Text(
@@ -77,21 +77,6 @@ fun AboutRecipe(title: String?, subtitle: String?, imageUrl: String?, applicatio
     }
 }
 
-
-/**
- * Elementos:
- *
- * 1. Componente na header com Lixeira.
- *
- * Implementar um componente de gesture de listagem.
- * - Ao pressionar vai selecionar o item.
- * - Ele poderá excluir.
- *
- * - Ao pressionar algum item, vai mudar pra listagem de checkbox
- *
- */
-
-
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun RecipeDetailsScreen(
@@ -119,7 +104,7 @@ fun RecipeDetailsScreen(
         Column(modifier = Modifier.verticalScroll(scrollState)) {
             AboutRecipe(
                 title = recipeState.title,
-                subtitle = recipeState.subtitle,
+                subtitle = recipeState.description,
                 imageUrl = recipeState.imagePath,
                 application
             )
@@ -157,9 +142,6 @@ fun RecipeDetailsScreen(
 //                Text("Editar")
 //            }
         }
-
-
-
 
 //        if(editMode.value){
 //            FloatingActionButton(

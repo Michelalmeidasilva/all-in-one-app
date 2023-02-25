@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.michel.galileu.ui.screens.recipe.ItemList
 
@@ -57,7 +58,7 @@ fun RecipeCard(
                     text = recipeData.value.title, color = MaterialTheme.colorScheme.primary
                 )
                 Spacer(modifier = Modifier.height(4.dp))
-                recipeData.value.subtitle?.let { Text(text = it) }
+                recipeData.value.description?.let { Text(text = it, maxLines = 1, overflow = TextOverflow.Ellipsis) }
             }
         }
     }

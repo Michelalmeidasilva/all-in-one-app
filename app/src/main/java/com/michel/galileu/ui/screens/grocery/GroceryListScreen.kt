@@ -1,4 +1,4 @@
-package com.michel.galileu.ui.screens.recipe
+package com.michel.galileu.ui.screens.grocery
 
 import android.annotation.SuppressLint
 import android.app.Application
@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
-fun RecipeScheduleScreen(
+fun GroceryListScreen(
     modifier: Modifier = Modifier,
     application: Application,
 

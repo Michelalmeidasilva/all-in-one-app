@@ -19,7 +19,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -55,9 +54,8 @@ fun RequestContentPermission(application: Application, bitmap: MutableState<Bitm
         Button(modifier = Modifier.align(Alignment.CenterVertically), onClick = {
             launcher.launch("image/*")
         }) {
-            Row {
-                Text(text = "Selecione a imagem.")
-            }
+            Text(text = "Selecione a imagem")
+
         }
 
         imageUri?.let {
@@ -111,7 +109,7 @@ fun RegisterItems(itemsList: MutableList<ItemForm>, typeList: ListType = ListTyp
             modifier = Modifier
                 .align(Alignment.CenterVertically)
                 .fillMaxWidth(0.75f)
-                .height(50.dp)
+                .height(45.dp)
                 .background(Color.White, RoundedCornerShape(5.dp))
                 .onKeyEvent(
                 ) {
@@ -128,17 +126,14 @@ fun RegisterItems(itemsList: MutableList<ItemForm>, typeList: ListType = ListTyp
             onValueChange = { text = it }
         )
 
-        OutlinedButton(modifier = Modifier
+        IconButton(modifier = Modifier
             .padding(horizontal = 10.dp)
-            .background(MaterialTheme.colorScheme.primary)
-            .height(50.dp),
-            border = BorderStroke(1.dp, color = MaterialTheme.colorScheme.primary),
-            shape = RoundedCornerShape(80),
+            .background(MaterialTheme.colorScheme.background),
             onClick = { addItemToList() }) {
             Icon(
-                modifier = Modifier.size(18.dp),
+                modifier = Modifier.size(22.dp),
                 imageVector = Icons.Filled.Add,
-                tint = Color.White,
+                tint = MaterialTheme.colorScheme.primary,
                 contentDescription = "Add"
             )
         }
@@ -175,7 +170,6 @@ fun RecipeAddScreen(
 
     val scrollState = rememberScrollState()
     var title by rememberSaveable { mutableStateOf("") }
-    var subtitle by rememberSaveable { mutableStateOf("") }
     var description by rememberSaveable { mutableStateOf("") }
     var loading by rememberSaveable { mutableStateOf(false) }
 
@@ -186,7 +180,7 @@ fun RecipeAddScreen(
 
             recipeAddViewModel.addRecipe(
                 recipeEntity = RecipeEntity(
-                    subtitle = subtitle,
+                    description = description,
                     title = title,
                     instructions = instructionsItems.map { it -> it.value },
                     ingredients = ingredients.map { it -> it.value },
@@ -209,25 +203,19 @@ fun RecipeAddScreen(
         Column(
             modifier = Modifier
                 .verticalScroll(scrollState)
-                .padding(start = 30.dp, top = 30.dp, end = 30.dp)
+                .padding(start = 30.dp, top = 10.dp, end = 30.dp)
         ) {
             Text(
                 text = "Cadastro de Receita",
                 modifier = Modifier.padding(2.dp),
-                style = MaterialTheme.typography.headlineSmall
+                style = MaterialTheme.typography.titleLarge
             )
 
-            Column() {
+            Column(modifier=Modifier.padding(top = 12.dp)) {
                 CustomOutlinedTextField(
                     value = title,
                     label = { Text(text = "Titulo") },
                     onValueChange = { title = it },
-                )
-
-                CustomOutlinedTextField(
-                    value = subtitle,
-                    label = { Text(text = "Sub-Título") },
-                    onValueChange = { subtitle = it },
                 )
 
                 CustomOutlinedTextField(
@@ -242,36 +230,34 @@ fun RecipeAddScreen(
                 )
             }
 
-//            RequestContentPermission(application, bitmap)
+            RequestContentPermission(application, bitmap)
 
-            Text("Ingredientes:", style = MaterialTheme.typography.titleLarge)
+            Text("Ingredientes:", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 10.dp, bottom = 4.dp))
 
             RegisterItems(itemsList = ingredients, ListType.ORDERED_LIST)
 
             Text(
                 "Preparo:",
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(top = 10.dp, bottom = 4.dp)
             )
 
             RegisterItems(itemsList = instructionsItems, ListType.NUMBERED_LIST)
+
+
+            Button(
+                onClick = { onRegisterRecipe() },
+                modifier = Modifier
+                    .padding(all = 4.dp)
+                    .align(alignment = Alignment.CenterHorizontally)
+
+            ) {
+                Text("Cadastrar")
+
+            }
         }
 
-        FloatingActionButton(
-            containerColor = Color.White,
-            onClick = { onRegisterRecipe() },
-            modifier = Modifier
-                .padding(all = 4.dp)
-                .align(alignment = Alignment.BottomEnd)
 
-        ) {
-            Icon(
-                imageVector = Icons.Outlined.CheckCircle,
-                contentDescription = "Finish",
-                modifier = Modifier.size(32.dp),
-                tint = Color.Green
-            )
-        }
     }
 
 }

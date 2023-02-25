@@ -11,7 +11,7 @@ import com.michel.galileu.ui.screens.home.HomeScreen
 import com.michel.galileu.ui.screens.recipe.RecipeAddScreen
 import com.michel.galileu.ui.screens.recipe.RecipeDetailsScreen
 import com.michel.galileu.ui.recipe.RecipeMenuScreen
-import com.michel.galileu.ui.screens.recipe.RecipeScheduleScreen
+import com.michel.galileu.ui.screens.grocery.GroceryListScreen
 import com.michel.galileu.ui.screens.recipe.RecipeScreen
 import com.michel.galileu.ui.screens.settings.SettingsScreen
 
@@ -72,8 +72,8 @@ fun GalileuNavHost(
             })
         }
 
-        composable(route = RecipeSchedule.route) {
-            RecipeScheduleScreen(modifier, application)
+        composable(route = GroceryList.route) {
+            GroceryListScreen(modifier, application)
         }
 
         composable(route = RecipeMenu.route) {
