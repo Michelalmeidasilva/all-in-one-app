@@ -1,4 +1,4 @@
-package com.michel.galileu.navigation
+package com.michel.galileu.utils.navigation
 
 import android.app.Application
 import androidx.compose.runtime.Composable
@@ -7,7 +7,13 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.michel.galileu.ui.screens.*
+import com.michel.galileu.ui.screens.home.HomeScreen
+import com.michel.galileu.ui.screens.recipe.RecipeAddScreen
+import com.michel.galileu.ui.screens.recipe.RecipeDetailsScreen
+import com.michel.galileu.ui.recipe.RecipeMenuScreen
+import com.michel.galileu.ui.screens.grocery.GroceryListScreen
+import com.michel.galileu.ui.screens.recipe.RecipeScreen
+import com.michel.galileu.ui.screens.settings.SettingsScreen
 
 /*
  * Copyright 2022 The Android Open Source Project
@@ -43,8 +49,7 @@ fun GalileuNavHost(
                 navController.navigateToDetailsScreen(typeArg)
             }, onAddRecipeClick = {
                 navController.navigate(RecipeAddNavigation.route)
-            }, application = application
-            )
+            })
         }
 
         composable(route = SettingsNavigation.route) {
@@ -67,9 +72,14 @@ fun GalileuNavHost(
             })
         }
 
-        composable(route = RecipeSchedule.route) {
-            RecipeScheduleScreen(modifier, application)
+        composable(route = GroceryList.route) {
+            GroceryListScreen(modifier, application)
         }
+
+        composable(route = RecipeMenu.route) {
+            RecipeMenuScreen(modifier, application)
+        }
+
     }
 }
 
@@ -90,7 +100,7 @@ fun NavHostController.navigateSingleTopTo(route: String) = this.navigate(route) 
 }
 
 private fun NavHostController.navigateToDetailsScreen(accountType: Any) {
-    this.navigateSingleTopTo("${RecipeDetailsNavigation.route}/$accountType")
+    this.navigate("${RecipeDetailsNavigation.route}/$accountType")
 }
 
 private fun NavHostController.navigateToRecipeScreen() {

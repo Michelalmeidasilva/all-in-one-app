@@ -26,9 +26,7 @@ platform :android do
   lane :beta do
     gradle(task: "clean assembleRelease")
     crashlytics
-  
-    # sh "your_script.sh"
-    # You can also use other beta testing services here
+
   end
 
   desc "Deploy a new version to the Google Play"
@@ -73,6 +71,25 @@ platform :android do
     )[0]
   end
 
+  lane :commit_version do
+    build_number = Actions.lane_context[SharedValues::BUILD_NUMBER] + 1
+    version_number = Actions.lane_context[SharedValues::VERSION_NUMBER]
+
+    version = "#{version_number}-build-#{build_number}"
+    branch_name = "release/android-#{version}"
+
+    sh "cd .. && git checkout -b #{branch_name}"
+
+    git_commit(path: '.', message: "New android app release #{version}", skip_git_hooks: true)
+    push_to_git_remote(local_branch: branch_name, remote_branch: branch_name)
+    create_pull_request(
+     repo: "Michelalmeidasilva/galileu",
+     title: "New Release ${version}",
+     head: branch_name,       # optional, defaults to current branch name
+     base: "develop", # optional, defaults to "master"
+     body: "Please pull this in!",       # optional
+    )
+  end
 
 
   lane :internal do
@@ -89,6 +106,14 @@ platform :android do
       skip_upload_apk: true
     )
 
-    increment_build_number()
+
+    increment_version_code(
+      gradle_file_path: "./app/build.gradle",
+      version_code: Actions.lane_context[SharedValues::BUILD_NUMBER]
+    )
+
+    get_version_code(track_name: "internal")
+
+    commit_version()
   end
 end

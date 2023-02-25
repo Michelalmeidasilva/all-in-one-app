@@ -46,6 +46,13 @@ class RecipeRepository(
             }
         }
     }
+
+    suspend fun updateRecipe(recipe: RecipeEntity){
+        withContext(Dispatchers.IO){
+            databaseApp.recipeDao().update(recipe)
+        }
+    }
+
     suspend fun removeRecipe(recipe: RecipeEntity) {
         withContext(Dispatchers.IO) {
             databaseApp.recipeDao().delete(recipe)

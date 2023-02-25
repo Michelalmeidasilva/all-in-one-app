@@ -1,4 +1,4 @@
-package com.michel.galileu.ui.screens
+package com.michel.galileu.ui.screens.settings
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

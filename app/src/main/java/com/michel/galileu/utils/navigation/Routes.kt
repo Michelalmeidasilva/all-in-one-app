@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-package com.michel.galileu.navigation
+package com.michel.galileu.utils.navigation
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AccountBox
-import androidx.compose.material.icons.rounded.Build
-import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -52,32 +49,38 @@ object HomeNavigation : NavigationSettings {
 object RecipesNavigation : NavigationSettings {
     override val route = "recipes"
     override val name = "Receitas"
-    override val icon: ImageVector = Icons.Rounded.Home;
+    override val icon: ImageVector = Icons.Rounded.AccountBox;
 }
 
-object RecipeSchedule : NavigationSettings {
-    override val route = "recipeSchedule"
-    override val name = "Cronograma"
-    override val icon: ImageVector = Icons.Rounded.AccountBox;
+object GroceryList : NavigationSettings {
+    override val route = "GroceryList"
+    override val name = "Compras"
+    override val icon: ImageVector = Icons.Rounded.ShoppingCart;
+}
+
+object RecipeMenu : NavigationSettings {
+    override val route = "recipe-menu"
+    override val name = "Cardápio"
+    override val icon: ImageVector = Icons.Rounded.Menu;
 }
 
 object SettingsNavigation : NavigationSettings {
     override val route = "settings"
     override val icon: ImageVector = Icons.Rounded.Settings;
-    override val name = "Preferências"
+    override val name = "Configuração"
 }
 
 object RecipeAddNavigation : NavigationSettings {
     override val route = "recipe-add"
     override val icon: ImageVector = Icons.Rounded.Settings;
-    override val name = "Recipe"
+    override val name = "Adicionar Receita"
 }
 
 object RecipeDetailsNavigation : NavigationSettings {
     // Added for simplicity, this icon will not in fact be used, as SingleAccount isn't
     // part of the RallyTabRow selection
     override val route = "details"
-    override val name = "Details"
+    override val name = "Receita"
     override val icon: ImageVector? = null;
 
     const val typeArg = "recipe_type"
@@ -92,5 +95,5 @@ object RecipeDetailsNavigation : NavigationSettings {
 }
 
 
-val bottomNavItems = listOf(RecipesNavigation, RecipeSchedule, SettingsNavigation)
+val bottomNavItems = listOf(RecipesNavigation, GroceryList, RecipeMenu, SettingsNavigation)
 

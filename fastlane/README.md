@@ -47,10 +47,26 @@ Deploy a new version to the Google Play
 
 
 
+### android deploy_homolog
+
+```sh
+[bundle exec] fastlane android deploy_homolog
+```
+
+
+
 ### android get_version_code
 
 ```sh
 [bundle exec] fastlane android get_version_code
+```
+
+
+
+### android commit_version
+
+```sh
+[bundle exec] fastlane android commit_version
 ```
 
 

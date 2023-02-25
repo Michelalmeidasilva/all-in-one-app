@@ -1,4 +1,5 @@
-package com.michel.galileu.ui.viewmodel
+package com.michel.galileu.viewmodel.recipe
+
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -9,25 +10,31 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 
-class RecipeViewModel(application: Application) : AndroidViewModel(application) {
+class RecipeDetailsViewModel(application: Application) : AndroidViewModel(application) {
     private val _uiState = MutableStateFlow(RecipeEntity())
     val uiState: StateFlow<RecipeEntity> = _uiState.asStateFlow();
+    val editMode = MutableStateFlow(false);
 
 
     private val mRepository: RecipeRepository =
         RecipeRepository(application)
-    
+
+
+    fun updateRecipe(recipe: RecipeEntity){
+        viewModelScope.launch {
+            _uiState.update{
+                recipe
+            }
+
+            mRepository.updateRecipe(recipe)
+        }
+    }
+
     fun fetchRecipe(idRecipe: Int) {
         viewModelScope.launch {
             _uiState.update {
                 val value = mRepository.getRecipeById(idRecipe);
-                it.copy(
-                    id = value.id,
-                    subtitle = value.subtitle,
-                    ingredients = value.ingredients,
-                    instructions = value.instructions,
-                    imagePath = value.imagePath
-                )
+                value
             }
             _uiState.onStart { }
 
