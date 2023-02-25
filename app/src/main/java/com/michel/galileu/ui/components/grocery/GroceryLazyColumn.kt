@@ -25,7 +25,7 @@ import com.michel.galileu.ui.screens.grocery.ItemParam
 fun ListGroceryItems(
     onUpdateList: () -> Unit,
     data: List<ItemParam>,
-    onClickItem: (value: Any) -> Unit,
+    onClickItem: (value: String) -> Unit,
     onChangeSearchText: () -> Unit,
     searchTextValue: String
 ) {

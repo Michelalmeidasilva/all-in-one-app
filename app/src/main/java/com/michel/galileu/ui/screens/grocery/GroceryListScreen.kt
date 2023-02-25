@@ -15,7 +15,7 @@ import com.michel.galileu.ui.components.grocery.ListGroceryItems
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun GroceryListScreen(
-    onClickGroceryList: (value: Any) -> Unit,
+    onClickGroceryList: (value: String) -> Unit,
     categories: ArrayList<String> = arrayListOf("Mercado", "Padaria"),
     items: ArrayList<ItemParam> = arrayListOf(
         ItemParam(

@@ -79,14 +79,19 @@ fun GalileuNavHost(
 
         composable(route = GroceryList.route) {
             GroceryListScreen(onClickGroceryList = { typeArg ->
-                navController.navigateToRecipeDetailsScreen(typeArg)
+                navController.navigateToGroceryListDetailsScreen(typeArg)
             })
         }
 
-        composable(route = GroceryDetailsNavigation.route) { navBackStackEntry ->
+        composable(
+            route = GroceryDetailsNavigation.routeWithArgs,
+            arguments = GroceryDetailsNavigation.arguments,
+            deepLinks = GroceryDetailsNavigation.deepLinks
+        ) { navBackStackEntry ->
             val recypeType =
-                Integer.parseInt(navBackStackEntry.arguments?.getString(GroceryDetailsNavigation.typeArg))
-            GroceryListItemDetailsScreen(recypeType, modifier, application)
+                navBackStackEntry.arguments?.getString(GroceryDetailsNavigation.typeArg)
+
+            GroceryListItemDetailsScreen(recypeType!!, modifier, application)
         }
     }
 }

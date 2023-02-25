@@ -8,9 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun GroceryListItemDetailsScreen(recypeType: Int, modifier: Modifier, application: Application) {
-
+fun GroceryListItemDetailsScreen(recypeType: String, modifier: Modifier, application: Application) {
     Box(modifier = Modifier.fillMaxSize()) {
-        Text(recypeType.toString())
+        Text(recypeType)
     }
 }
