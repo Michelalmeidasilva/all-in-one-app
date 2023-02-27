@@ -12,7 +12,7 @@ import com.michel.galileu.data.room.entities.ProductCategoryEntity
 interface ProductCategoryDao {
     @Transaction
     @Query("SELECT * FROM productcategoryentity")
-    suspend fun getAll(): List<ProductCategoryDao>
+    suspend fun getAll(): List<ProductCategoryEntity>
 
 
     @Query("SELECT * FROM productcategoryentity WHERE id = :id")

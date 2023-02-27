@@ -12,7 +12,5 @@ data class GroceryListEntity(
     @ColumnInfo(name = "") val priceAmount: String,
     @ColumnInfo(name = "") val icon: String? = null,
     @Embedded val categoryList: GroceryListCategoryEntity,
-    @ColumnInfo(name = "") val products: ArrayList<ProductEntity>? = null,
-
-
-    )
+    @ColumnInfo(name = "") val products: ArrayList<ProductEntity>? = null
+)
