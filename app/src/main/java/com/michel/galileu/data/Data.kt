@@ -1,6 +1,5 @@
 package com.michel.galileu.data
 
-import com.michel.galileu.data.entities.RecipeEntity
 import com.michel.galileu.models.SettingsModel
 
 

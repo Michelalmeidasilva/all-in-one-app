@@ -1,10 +1,8 @@
 package com.michel.galileu.data.repository
 
 import android.app.Application
-import android.content.Context
-import com.michel.galileu.data.daos.RecipeDao
-import com.michel.galileu.data.entities.RecipeEntity
 import com.michel.galileu.data.room.DatabaseApp
+import com.michel.galileu.data.room.entities.RecipeEntity
 import com.michel.galileu.data.room.getDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -47,8 +45,8 @@ class RecipeRepository(
         }
     }
 
-    suspend fun updateRecipe(recipe: RecipeEntity){
-        withContext(Dispatchers.IO){
+    suspend fun updateRecipe(recipe: RecipeEntity) {
+        withContext(Dispatchers.IO) {
             databaseApp.recipeDao().update(recipe)
         }
     }
@@ -58,7 +56,6 @@ class RecipeRepository(
             databaseApp.recipeDao().delete(recipe)
         }
     }
-
 
 
 }

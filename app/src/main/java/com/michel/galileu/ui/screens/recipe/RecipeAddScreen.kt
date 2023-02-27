@@ -30,8 +30,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.michel.galileu.data.entities.ItemForm
-import com.michel.galileu.data.entities.RecipeEntity
+import com.michel.galileu.data.room.entities.RecipeEntity
+import com.michel.galileu.models.RecipeModel
 import com.michel.galileu.ui.viewmodel.recipe.RecipeAddViewModel
 import com.michel.galileu.utils.changeListType
 import kotlinx.coroutines.*
@@ -94,12 +94,12 @@ enum class ListType {
 }
 
 @Composable
-fun RegisterItems(itemsList: MutableList<ItemForm>, typeList: ListType = ListType.ORDERED_LIST) {
+fun RegisterItems(itemsList: MutableList<RecipeModel>, typeList: ListType = ListType.ORDERED_LIST) {
     var text by rememberSaveable { mutableStateOf("") }
 
     fun addItemToList() {
         if (!text.isBlank()) {
-            itemsList.add(ItemForm(text, false))
+            itemsList.add(RecipeModel(text, false))
             text = "";
         }
     }
@@ -164,8 +164,8 @@ fun RecipeAddScreen(
     recipeAddViewModel: RecipeAddViewModel = viewModel(),
     onSuccessfullyCreateRecipe: () -> Unit
 ) {
-    val ingredients = remember { mutableStateListOf<ItemForm>() }
-    val instructionsItems = remember { mutableStateListOf<ItemForm>() }
+    val ingredients = remember { mutableStateListOf<RecipeModel>() }
+    val instructionsItems = remember { mutableStateListOf<RecipeModel>() }
     val bitmap = remember { mutableStateOf<Bitmap?>(null) }
 
     val scrollState = rememberScrollState()

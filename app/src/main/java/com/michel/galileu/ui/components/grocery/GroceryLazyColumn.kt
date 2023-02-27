@@ -18,13 +18,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.michel.galileu.ui.screens.grocery.ItemParam
+import com.michel.galileu.data.room.entities.GroceryListEntity
 
 
 @Composable
 fun ListGroceryItems(
     onUpdateList: () -> Unit,
-    data: List<ItemParam>,
+    data: List<GroceryListEntity>,
     onClickItem: (value: String) -> Unit,
     onChangeSearchText: () -> Unit,
     searchTextValue: String
@@ -47,7 +47,7 @@ fun ListGroceryItems(
 
 
 @Composable
-fun ItemCard(item: ItemParam, onClick: () -> Unit) {
+fun ItemCard(item: GroceryListEntity, onClick: () -> Unit) {
 
     Row(
         modifier = Modifier
@@ -57,7 +57,7 @@ fun ItemCard(item: ItemParam, onClick: () -> Unit) {
     ) {
         Text(item.name)
         Spacer(Modifier.width(8.dp))
-        Text(item.category)
+        Text(item.category?.name!!)
         Spacer(Modifier.width(8.dp))
         Text(item.priceAmount)
         IconButton(onClick = onClick) {

@@ -5,8 +5,8 @@ import android.graphics.Bitmap
 import androidx.compose.runtime.MutableState
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.michel.galileu.data.entities.RecipeEntity
 import com.michel.galileu.data.repository.RecipeRepository
+import com.michel.galileu.data.room.entities.RecipeEntity
 import com.michel.galileu.utils.IOManager
 import kotlinx.coroutines.launch
 

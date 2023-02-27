@@ -8,33 +8,33 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.michel.galileu.models.GroceryListCategoryModel
-import com.michel.galileu.models.GroceryListModel
+import com.michel.galileu.data.room.entities.GroceryListCategoryEntity
+import com.michel.galileu.data.room.entities.GroceryListEntity
 import com.michel.galileu.ui.components.grocery.ListGroceryItems
 
 
 object GroceryMock {
     val categories = arrayListOf("Mercado", "Padaria");
-    val items: ArrayList<GroceryListModel> = arrayListOf(
-        GroceryListModel(
+    val items: ArrayList<GroceryListEntity> = arrayListOf(
+        GroceryListEntity(
             name = "Stok",
             priceAmount = "10.00",
-            category = GroceryListCategoryModel(1, "Mercado")
+            category = GroceryListCategoryEntity(1, "Mercado")
         ),
-        GroceryListModel(
+        GroceryListEntity(
             name = "Stok",
             priceAmount = "10.00",
-            category = GroceryListCategoryModel(1, "Mercado")
+            category = GroceryListCategoryEntity(1, "Mercado")
         ),
-        GroceryListModel(
+        GroceryListEntity(
             name = "Stok",
             priceAmount = "10.00",
-            category = GroceryListCategoryModel(1, "Mercado")
+            category = GroceryListCategoryEntity(1, "Mercado")
         ),
-        GroceryListModel(
+        GroceryListEntity(
             name = "Stok",
             priceAmount = "10.00",
-            category = GroceryListCategoryModel(1, "Mercado")
+            category = GroceryListCategoryEntity(1, "Mercado")
         ),
 
         )
@@ -46,7 +46,7 @@ object GroceryMock {
 fun GroceriesListsScreen(
     onClickGroceryList: (value: String) -> Unit,
     categories: ArrayList<String> = GroceryMock.categories,
-    items: ArrayList<GroceryListModel> = GroceryMock.items
+    items: ArrayList<GroceryListEntity> = GroceryMock.items
 ) {
     Box(
         modifier = Modifier
