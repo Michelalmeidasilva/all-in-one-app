@@ -8,9 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.michel.galileu.data.room.entities.GroceryListCategoryEntity
-import com.michel.galileu.data.room.entities.GroceryListEntity
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.michel.galileu.data.entities.GroceryListCategoryEntity
+import com.michel.galileu.data.entities.GroceryListEntity
 import com.michel.galileu.ui.components.grocery.ListGroceryItems
+import com.michel.galileu.ui.viewmodel.grocerylist.GroceriesListsViewModel
 
 
 object GroceryMock {
@@ -19,25 +21,24 @@ object GroceryMock {
         GroceryListEntity(
             name = "Stok",
             priceAmount = "10.00",
-            category = GroceryListCategoryEntity(1, "Mercado")
+            categoryList = GroceryListCategoryEntity(1, "Mercado")
         ),
         GroceryListEntity(
             name = "Stok",
             priceAmount = "10.00",
-            category = GroceryListCategoryEntity(1, "Mercado")
+            categoryList = GroceryListCategoryEntity(1, "Mercado")
         ),
         GroceryListEntity(
             name = "Stok",
             priceAmount = "10.00",
-            category = GroceryListCategoryEntity(1, "Mercado")
+            categoryList = GroceryListCategoryEntity(1, "Mercado")
         ),
         GroceryListEntity(
             name = "Stok",
             priceAmount = "10.00",
-            category = GroceryListCategoryEntity(1, "Mercado")
+            categoryList = GroceryListCategoryEntity(1, "Mercado")
         ),
-
-        )
+    )
 }
 
 
@@ -46,8 +47,13 @@ object GroceryMock {
 fun GroceriesListsScreen(
     onClickGroceryList: (value: String) -> Unit,
     categories: ArrayList<String> = GroceryMock.categories,
-    items: ArrayList<GroceryListEntity> = GroceryMock.items
+    items: ArrayList<GroceryListEntity> = GroceryMock.items,
+    groceryViewModel: GroceriesListsViewModel = viewModel(),
+
 ) {
+    println("List screens")
+    println(groceryViewModel.groceriesListData.toString())
+
     Box(
         modifier = Modifier
             .fillMaxSize()

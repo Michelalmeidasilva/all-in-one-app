@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.michel.galileu.data.room.entities.RecipeEntity
+import com.michel.galileu.data.entities.RecipeEntity
 import com.michel.galileu.ui.components.recipe.RecipeList
 import com.michel.galileu.ui.viewmodel.recipe.RecipeViewModel
 

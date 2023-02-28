@@ -18,7 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.michel.galileu.data.room.entities.GroceryListEntity
+import com.michel.galileu.data.entities.GroceryListEntity
 
 
 @Composable
@@ -37,7 +37,7 @@ fun ListGroceryItems(
             itemsIndexed(items = data) { index, item ->
                 ItemCard(
                     item = item,
-                    onClick = { onClickItem(item.name) }
+                    onClick = { onClickItem(item?.name!!) }
                 )
             }
         }
@@ -55,9 +55,9 @@ fun ItemCard(item: GroceryListEntity, onClick: () -> Unit) {
             .padding(vertical = 4.dp)
 
     ) {
-        Text(item.name)
+        Text(item?.name!!)
         Spacer(Modifier.width(8.dp))
-        Text(item.category?.name!!)
+        Text(item?.categoryList?.name!!)
         Spacer(Modifier.width(8.dp))
         Text(item.priceAmount)
         IconButton(onClick = onClick) {

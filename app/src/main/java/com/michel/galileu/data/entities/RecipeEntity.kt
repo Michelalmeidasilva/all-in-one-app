@@ -1,4 +1,4 @@
-package com.michel.galileu.data.room.entities
+package com.michel.galileu.data.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

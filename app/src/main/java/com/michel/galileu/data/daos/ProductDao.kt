@@ -6,31 +6,23 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import com.michel.galileu.data.room.entities.ProductEntity
+import com.michel.galileu.data.entities.ProductEntity
 
 @Dao
 interface ProductDao {
-
-
     @Transaction
     @Query("SELECT * FROM productentity")
     suspend fun getAll(): List<ProductEntity>
 
-
-    @Query("SELECT * FROM productentity WHERE id = :id")
+    @Query("SELECT * FROM productentity WHERE productId = :id")
     suspend fun getById(id: Int): ProductEntity
-
 
     @Insert
     suspend fun insert(productEntity: ProductEntity)
 
-
     @Update
     suspend fun update(productEntity: ProductEntity)
 
-
     @Delete
     suspend fun delete(productEntity: ProductEntity)
-
-
 }

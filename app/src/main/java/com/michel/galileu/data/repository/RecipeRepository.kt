@@ -1,8 +1,8 @@
 package com.michel.galileu.data.repository
 
 import android.app.Application
+import com.michel.galileu.data.entities.RecipeEntity
 import com.michel.galileu.data.room.DatabaseApp
-import com.michel.galileu.data.room.entities.RecipeEntity
 import com.michel.galileu.data.room.getDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -36,7 +36,6 @@ class RecipeRepository(
         return data;
     }
 
-
     suspend fun removeRecipe(recipes: List<RecipeEntity>) {
         withContext(Dispatchers.IO) {
             recipes.forEach {
@@ -56,6 +55,4 @@ class RecipeRepository(
             databaseApp.recipeDao().delete(recipe)
         }
     }
-
-
 }

@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import com.michel.galileu.data.room.entities.ProductCategoryEntity
+import com.michel.galileu.data.entities.ProductCategoryEntity
 
 @Dao
 interface ProductCategoryDao {
@@ -14,18 +14,14 @@ interface ProductCategoryDao {
     @Query("SELECT * FROM productcategoryentity")
     suspend fun getAll(): List<ProductCategoryEntity>
 
-
-    @Query("SELECT * FROM productcategoryentity WHERE id = :id")
+    @Query("SELECT * FROM productcategoryentity WHERE productCategoryId = :id")
     suspend fun getById(id: Int): ProductCategoryEntity
-
 
     @Insert
     suspend fun insert(category: ProductCategoryEntity)
 
-
     @Update
     suspend fun update(category: ProductCategoryEntity)
-
 
     @Delete
     suspend fun delete(category: ProductCategoryEntity)

@@ -30,7 +30,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.michel.galileu.data.room.entities.RecipeEntity
+import com.michel.galileu.data.entities.RecipeEntity
 import com.michel.galileu.models.RecipeModel
 import com.michel.galileu.ui.viewmodel.recipe.RecipeAddViewModel
 import com.michel.galileu.utils.changeListType

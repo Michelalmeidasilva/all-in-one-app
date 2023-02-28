@@ -1,4 +1,4 @@
-package com.michel.galileu.data.room.entities
+package com.michel.galileu.data.entities
 
 import androidx.room.Embedded
 import androidx.room.Entity
@@ -13,9 +13,10 @@ data class GroceryListProductsCrossRef(
 )
 
 
+@Entity
 data class GroceryListWithProductsEntity(
     @Embedded
-    val list: GroceryListCategoryEntity,
+    val list: GroceryListEntity,
     @Relation(
         parentColumn = "listId",
         entityColumn = "productId",

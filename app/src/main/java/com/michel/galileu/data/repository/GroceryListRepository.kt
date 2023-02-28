@@ -1,8 +1,8 @@
 package com.michel.galileu.data.repository
 
 import android.app.Application
+import com.michel.galileu.data.entities.GroceryListEntity
 import com.michel.galileu.data.room.DatabaseApp
-import com.michel.galileu.data.room.entities.GroceryListEntity
 import com.michel.galileu.data.room.getDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

@@ -1,7 +1,7 @@
 package com.michel.galileu.data.daos
 
 import androidx.room.*
-import com.michel.galileu.data.room.entities.RecipeEntity
+import com.michel.galileu.data.entities.RecipeEntity
 
 @Dao
 interface RecipeDao {

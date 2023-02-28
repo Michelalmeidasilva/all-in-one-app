@@ -11,11 +11,12 @@ import com.michel.galileu.data.daos.GroceryListDao
 import com.michel.galileu.data.daos.ProductCategoryDao
 import com.michel.galileu.data.daos.ProductDao
 import com.michel.galileu.data.daos.RecipeDao
-import com.michel.galileu.data.room.entities.GroceryListCategoryEntity
-import com.michel.galileu.data.room.entities.GroceryListEntity
-import com.michel.galileu.data.room.entities.ProductCategoryEntity
-import com.michel.galileu.data.room.entities.ProductEntity
-import com.michel.galileu.data.room.entities.RecipeEntity
+import com.michel.galileu.data.entities.GroceryListCategoryEntity
+import com.michel.galileu.data.entities.GroceryListEntity
+import com.michel.galileu.data.entities.GroceryListProductsCrossRef
+import com.michel.galileu.data.entities.ProductCategoryEntity
+import com.michel.galileu.data.entities.ProductEntity
+import com.michel.galileu.data.entities.RecipeEntity
 
 /**
  * The [RoomDatabase] we use in this app.
@@ -26,9 +27,10 @@ import com.michel.galileu.data.room.entities.RecipeEntity
         GroceryListEntity::class,
         GroceryListCategoryEntity::class,
         ProductEntity::class,
-        ProductCategoryEntity::class
+        ProductCategoryEntity::class,
+        GroceryListProductsCrossRef::class
     ],
-    version = 2
+    version = 3
 )
 
 @TypeConverters(ListConverters::class)
@@ -50,7 +52,7 @@ fun getDatabase(context: Context): DatabaseApp {
                 context.applicationContext,
                 DatabaseApp::class.java,
                 "galileu-app"
-            ).build()
+            ).addMigrations().build()
         }
     }
     return INSTANCE

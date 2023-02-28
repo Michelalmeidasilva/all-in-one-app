@@ -2,7 +2,7 @@ package com.michel.galileu.ui.viewmodel.recipe
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.michel.galileu.data.room.entities.RecipeEntity
+import com.michel.galileu.data.entities.RecipeEntity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -8,6 +8,4 @@ object Data {
         SettingsModel(name = "Privacy", "test"), SettingsModel(name = "Security", "test"),
         SettingsModel(name = "About", "test"),
     );
-
-
 }
