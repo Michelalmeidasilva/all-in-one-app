@@ -48,6 +48,7 @@ fun GalileuNavHost(
         composable(route = HomeNavigation.route) {
             HomeScreen(navController)
         }
+
         composable(route = RecipesNavigation.route) {
             RecipeScreen(onRecipeDetailsClick = { typeArg ->
                 navController.navigateToRecipeDetailsScreen(typeArg)
@@ -83,6 +84,8 @@ fun GalileuNavHost(
         composable(route = Groceries.route) {
             GroceriesListsScreen(onClickGroceryList = { typeArg ->
                 navController.navigateToGroceryListDetailsScreen(typeArg)
+            }, onClickRegisterGrocery = {
+                navController.navigate(GroceryListRegister.route)
             })
         }
 
@@ -91,13 +94,13 @@ fun GalileuNavHost(
             arguments = GroceryListDetailsNavigation.arguments,
             deepLinks = GroceryListDetailsNavigation.deepLinks
         ) { navBackStackEntry ->
-            val recypeType =
+            val groceryType =
                 navBackStackEntry.arguments?.getString(GroceryListDetailsNavigation.typeArg)
 
-            GroceryListDetailsScreen(recypeType!!, modifier, application)
+            GroceryListDetailsScreen(groceryType!!, modifier, application)
         }
 
-        composable(route = GroceryListDetails.route) {
+        composable(route = GroceryListRegister.route) {
             GroceryListRegisterScreen()
         }
 
@@ -111,9 +114,10 @@ fun GalileuNavHost(
             deepLinks = ProductDetails.deepLinks
         ) { navBackStackEntry ->
             val recypeType =
-                Integer.parseInt(navBackStackEntry.arguments?.getString(GroceryListDetailsNavigation.typeArg))
+                navBackStackEntry.arguments?.getString(GroceryListDetailsNavigation.typeArg)
+                    ?.let { Integer.parseInt(it) }
 
-            ProductDetailsScreen(1, modifier, application)
+            ProductDetailsScreen(recypeType, modifier, application)
         }
 
 

@@ -52,7 +52,7 @@ fun getDatabase(context: Context): DatabaseApp {
                 context.applicationContext,
                 DatabaseApp::class.java,
                 "galileu-app"
-            ).addMigrations().build()
+            ).build()
         }
     }
     return INSTANCE

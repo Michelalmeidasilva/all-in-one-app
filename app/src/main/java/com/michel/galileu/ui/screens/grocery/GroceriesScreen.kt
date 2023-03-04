@@ -12,7 +12,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.michel.galileu.data.entities.GroceryListCategoryEntity
 import com.michel.galileu.data.entities.GroceryListEntity
 import com.michel.galileu.ui.components.grocery.ListGroceryItems
-import com.michel.galileu.ui.viewmodel.grocerylist.GroceriesListsViewModel
+import com.michel.galileu.ui.viewmodel.grocery.GroceriesListsViewModel
 
 
 object GroceryMock {
@@ -46,29 +46,39 @@ object GroceryMock {
 @Composable
 fun GroceriesListsScreen(
     onClickGroceryList: (value: String) -> Unit,
+    onClickRegisterGrocery: () -> Unit,
     categories: ArrayList<String> = GroceryMock.categories,
     items: ArrayList<GroceryListEntity> = GroceryMock.items,
     groceryViewModel: GroceriesListsViewModel = viewModel(),
 
-) {
-    println("List screens")
-    println(groceryViewModel.groceriesListData.toString())
+    ) {
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .fillMaxHeight(0.8f)
     ) {
-        ListGroceryItems(
-            onUpdateList = { null },
-            data = items,
-            onClickItem = onClickGroceryList,
-            onChangeSearchText = {},
-            searchTextValue = ""
-        )
+        Column() {
+            Text(
+                "Listas de compras",
+                modifier = Modifier
+                    .padding(top = 24.dp, bottom = 16.dp)
+                    .align(Alignment.CenterHorizontally)
+            )
+
+            ListGroceryItems(
+                onUpdateList = { null },
+                data = items,
+                onClickItem = onClickGroceryList,
+                onChangeSearchText = {},
+                searchTextValue = ""
+            )
+        }
+
+
+
 
         Button(
-            onClick = {},
+            onClick = { onClickRegisterGrocery() },
             modifier = Modifier
                 .padding(all = 8.dp)
                 .align(alignment = Alignment.BottomCenter)
