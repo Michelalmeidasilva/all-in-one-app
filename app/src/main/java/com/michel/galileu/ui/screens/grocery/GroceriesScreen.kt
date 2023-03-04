@@ -12,7 +12,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.michel.galileu.data.entities.GroceryListCategoryEntity
 import com.michel.galileu.data.entities.GroceryListEntity
 import com.michel.galileu.ui.components.grocery.ListGroceryItems
-import com.michel.galileu.ui.viewmodel.grocery.GroceriesListsViewModel
+import com.michel.galileu.viewmodel.grocery.GroceriesListsViewModel
 
 
 object GroceryMock {

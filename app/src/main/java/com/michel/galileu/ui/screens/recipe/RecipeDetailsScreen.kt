@@ -3,7 +3,6 @@ package com.michel.galileu.ui.screens.recipe
 import android.annotation.SuppressLint
 import android.app.Application
 import androidx.compose.foundation.*
-
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -15,10 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.michel.galileu.ui.viewmodel.recipe.RecipeDetailsViewModel
-
 import com.michel.galileu.utils.IOManager
 import com.michel.galileu.utils.changeListType
+import com.michel.galileu.viewmodel.recipe.RecipeDetailsViewModel
 
 @Composable
 fun ListItems(items: List<String?>?, listType: ListType, title: String) {

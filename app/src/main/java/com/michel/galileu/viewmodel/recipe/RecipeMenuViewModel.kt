@@ -1,4 +1,4 @@
-package com.michel.galileu.ui.viewmodel.recipe
+package com.michel.galileu.viewmodel.recipe
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

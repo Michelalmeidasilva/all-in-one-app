@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.michel.galileu.ui.viewmodel.recipe.RecipeMenuViewModel
+import com.michel.galileu.viewmodel.recipe.RecipeMenuViewModel
 
 @Composable
 fun RecipeMenuScreen(

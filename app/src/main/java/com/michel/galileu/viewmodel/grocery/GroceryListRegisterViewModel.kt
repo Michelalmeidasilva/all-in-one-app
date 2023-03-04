@@ -1,4 +1,4 @@
-package com.michel.galileu.ui.viewmodel.grocery
+package com.michel.galileu.viewmodel.grocery
 
 import android.app.Application
 import androidx.compose.runtime.mutableStateOf
