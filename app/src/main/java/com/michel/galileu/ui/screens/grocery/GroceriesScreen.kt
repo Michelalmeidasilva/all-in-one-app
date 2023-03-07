@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -47,11 +48,10 @@ object GroceryMock {
 fun GroceriesListsScreen(
     onClickGroceryList: (value: String) -> Unit,
     onClickRegisterGrocery: () -> Unit,
-    categories: ArrayList<String> = GroceryMock.categories,
-    items: ArrayList<GroceryListEntity> = GroceryMock.items,
     groceryViewModel: GroceriesListsViewModel = viewModel(),
 
     ) {
+    val values = groceryViewModel.groceriesListData.collectAsState().value
 
     Box(
         modifier = Modifier
@@ -67,15 +67,12 @@ fun GroceriesListsScreen(
 
             ListGroceryItems(
                 onUpdateList = { null },
-                data = items,
+                data = values,
                 onClickItem = onClickGroceryList,
                 onChangeSearchText = {},
                 searchTextValue = ""
             )
         }
-
-
-
 
         Button(
             onClick = { onClickRegisterGrocery() },

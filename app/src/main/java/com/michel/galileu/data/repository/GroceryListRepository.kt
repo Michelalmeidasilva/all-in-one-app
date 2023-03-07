@@ -13,13 +13,13 @@ class GroceryListRepository(
     private val databaseApp: DatabaseApp = getDatabase(application)
 
 
-    suspend fun insertCategory(value: GroceryListEntity) {
+    suspend fun insert(value: GroceryListEntity) {
         withContext(Dispatchers.IO) {
             databaseApp.groceryListDao().insert(value)
         }
     }
 
-    suspend fun getCategoryById(id: Int): GroceryListEntity {
+    suspend fun getGroceryListById(id: Int): GroceryListEntity {
         var data: GroceryListEntity;
         withContext(Dispatchers.IO) {
             data = databaseApp.groceryListDao().getById(id);
@@ -27,7 +27,7 @@ class GroceryListRepository(
         return data;
     }
 
-    suspend fun getCategories(): List<GroceryListEntity> {
+    suspend fun getGroceriesList(): List<GroceryListEntity> {
         var data: List<GroceryListEntity>;
 
         withContext(Dispatchers.IO) {
@@ -38,7 +38,7 @@ class GroceryListRepository(
     }
 
 
-    suspend fun removeCategory(values: List<GroceryListEntity>) {
+    suspend fun removeGroceryList(values: List<GroceryListEntity>) {
         withContext(Dispatchers.IO) {
             values.forEach {
                 databaseApp.groceryListDao().delete(it)
@@ -46,7 +46,7 @@ class GroceryListRepository(
         }
     }
 
-    suspend fun updateCategory(value: GroceryListEntity) {
+    suspend fun updateGroceryList(value: GroceryListEntity) {
         withContext(Dispatchers.IO) {
             databaseApp.groceryListDao().update(value)
         }

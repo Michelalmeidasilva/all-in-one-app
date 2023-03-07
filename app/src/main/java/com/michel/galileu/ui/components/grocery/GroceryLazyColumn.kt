@@ -71,15 +71,25 @@ fun ItemCard(item: GroceryListEntity, onClick: () -> Unit) {
 
             Column(modifier = Modifier.padding(start = 16.dp)) {
 
-                Text(
-                    "Teste",
-                    style = TextStyle.Default.copy(fontSize = 14.sp, fontWeight = FontWeight.Medium)
-                )
+                item.name?.let {
+                    Text(
+                        it,
+                        style = TextStyle.Default.copy(
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                    )
+                }
 
-                Text(
-                    "30 Products",
-                    style = TextStyle.Default.copy(fontSize = 12.sp, fontWeight = FontWeight.Thin)
-                )
+                item.descriptionList?.let {
+                    Text(
+                        it,
+                        style = TextStyle.Default.copy(
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Thin
+                        )
+                    )
+                }
             }
         }
 

@@ -101,7 +101,7 @@ fun GalileuNavHost(
         }
 
         composable(route = GroceryListRegister.route) {
-            GroceryListRegisterScreen()
+            GroceryListRegisterScreen(onSubmitForm = { navController.navigate(Groceries.route) })
         }
 
         composable(route = ProductRegister.route) {

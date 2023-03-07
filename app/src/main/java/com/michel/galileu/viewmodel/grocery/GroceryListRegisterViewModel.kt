@@ -1,46 +1,56 @@
 package com.michel.galileu.viewmodel.grocery
 
 import android.app.Application
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.michel.galileu.data.entities.GroceryListCategoryEntity
-import com.michel.galileu.data.repository.GroceryListCategoryRepository
+import com.michel.galileu.data.entities.GroceryListEntity
+import com.michel.galileu.data.repository.GroceryListRepository
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 
+data class GroceryFormDataState(
+    var title: String = "",
+    var categoryList: GroceryListCategoryEntity? = GroceryListCategoryEntity(
+        name = "general",
+        icon = "Home",
+        listCategoryId = 1
+    ),
+    var description: String = ""
+)
+
+
 class GroceryListRegisterViewModel(application: Application) : AndroidViewModel(application) {
-    // continuar daqui: https://medium.com/@asissuthar/simplify-form-validation-using-kotlin-flow-on-android-16c718e3efaa
-    var firstName by mutableStateOf("")
-    var lastName by mutableStateOf("")
-    var password by mutableStateOf("")
-    var mobileNumber by mutableStateOf("")
-    var mobileCountryCode by mutableStateOf("")
-    var dateOfBirth by mutableStateOf("")
+    val groceryListRepository = GroceryListRepository(application)
 
-    private val _groceriesListData = MutableStateFlow<List<GroceryListCategoryEntity>>(emptyList())
-    val groceriesListData = _groceriesListData.asStateFlow()
+    private val _uiState: MutableStateFlow<GroceryFormDataState> = MutableStateFlow(
+        GroceryFormDataState()
+    )
+    val uiState: MutableStateFlow<GroceryFormDataState> = _uiState
 
-    private val groceryListCategoryRepository = GroceryListCategoryRepository(application);
-
-
-    init {
-        fetchRecipe();
-
-
-        println("Values:")
-        println(groceriesListData.value.toString())
-    }
-
-    fun fetchRecipe() {
-        viewModelScope.launch {
-            _groceriesListData.update {
-                val value = groceryListCategoryRepository.getCategories();
-                value
+    fun onChangeFormFieldValue(field: String, newValue: String) = viewModelScope.launch {
+        _uiState.update {
+            when (field) {
+                "title" -> it.copy(title = newValue)
+                "description" -> it.copy(description = newValue)
+                else -> it
             }
         }
+    }
+
+
+    fun onSubmit() = viewModelScope.launch {
+        groceryListRepository.insert(
+            GroceryListEntity(
+                name = _uiState.value.title,
+                priceAmount = null,
+                categoryList = null,
+                iconList = null,
+                descriptionList = _uiState.value.description
+            )
+
+        )
     }
 }
