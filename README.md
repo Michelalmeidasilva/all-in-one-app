@@ -15,8 +15,11 @@ ideal para pessoas ocupadas que desejam planejar suas rotinas de forma eficiente
 ### Como executar o projeto
 
 Clone o repositório em sua máquina local:
+```js
 
 git clone https://github.com/seu-usuario/nome-do-repositorio.git
+```
+
 Abra o projeto no Android Studio.
 
 Execute o projeto no emulador ou em um dispositivo Android.
@@ -51,13 +54,22 @@ Faça um fork deste repositório.
 
 ### Crie uma branch com suas modificações:
 
+```js
 git checkout -b minha-branch
+```
+
 Faça suas modificações e faça commit:
 
+```js
 git commit -am "Minhas modificações"
+```
+
 Envie as modificações para o seu fork:
 
+```js
 git push origin minha-branch
+```
+
 Abra um pull request para este repositório.
 
 ### Licença
