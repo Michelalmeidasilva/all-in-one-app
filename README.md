@@ -24,7 +24,7 @@ Abra o projeto no Android Studio.
 
 Execute o projeto no emulador ou em um dispositivo Android.
 
-Estrutura do projeto
+### Estrutura do projeto
 
 ```js
 
