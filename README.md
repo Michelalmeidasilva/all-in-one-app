@@ -1,6 +1,5 @@
 # App do Galileu
 
-###  Descreva brevemente o projeto aqui.
 O aplicativo é um assistente para o uso diário de rotinas, receitas e culinárias. 
 Ele oferece uma variedade de recursos, incluindo uma lista de tarefas diárias, um catálogo de receitas para café da manhã, almoço e jantar, além de instruções passo a passo para cozinhar as receitas. 
 O aplicativo também permite que os usuários salvem suas receitas favoritas e crie suas próprias listas de compras. Com um design intuitivo e fácil de usar, o aplicativo é 
@@ -61,7 +60,7 @@ git checkout -b minha-branch
 Faça suas modificações e faça commit:
 
 ```js
-git commit -am "Minhas modificações"
+git commit -am "wip: Minhas modificações"
 ```
 
 Envie as modificações para o seu fork:
